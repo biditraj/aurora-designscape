@@ -1,7 +1,6 @@
 
 import { useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import VariableProximity from './VariableProximity';
 
 const Hero = () => {
@@ -86,26 +85,10 @@ const Hero = () => {
               Let's build something amazing together.
             </p>
           </motion.div>
-          
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 items-center"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
-            }}
-          >
-            <a href="#projects" className="btn-primary">
-              View My Projects
-            </a>
-            <a href="#about" className="btn-outline flex items-center gap-2 group">
-              About Me
-              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
-          </motion.div>
         </motion.div>
         
         <motion.div 
-          className="scroll-indicator transition-opacity duration-500"
+          className="scroll-indicator absolute bottom-10 transition-opacity duration-500"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.6, ease: 'easeOut' }}

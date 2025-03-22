@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Mail, MapPin, Phone } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, Instagram, Github } from 'lucide-react';
 
 const Contact = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -66,19 +66,19 @@ const Contact = () => {
     {
       icon: <Mail className="h-5 w-5 text-primary" />,
       title: 'Email',
-      value: 'hello@biditraj.com',
-      link: 'mailto:hello@biditraj.com',
+      value: 'biditraj@gmail.com',
+      link: 'mailto:biditraj@gmail.com',
     },
     {
       icon: <MapPin className="h-5 w-5 text-secondary" />,
       title: 'Location',
-      value: 'San Francisco, CA',
+      value: 'New Delhi, India',
     },
     {
       icon: <Phone className="h-5 w-5 text-accent" />,
       title: 'Phone',
-      value: '+1 (123) 456-7890',
-      link: 'tel:+11234567890',
+      value: '+(91) 9337718826',
+      link: 'tel:+919337718826',
     },
   ];
 
@@ -225,19 +225,22 @@ const Contact = () => {
               <div className="mt-12">
                 <h3 className="text-xl font-bold mb-4">Follow Me</h3>
                 <div className="flex gap-4">
-                  {['twitter', 'github', 'dribbble', 'linkedin'].map((platform) => (
-                    <a 
-                      key={platform}
-                      href="#"
-                      className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
-                    >
-                      <img 
-                        src={`https://simpleicons.org/icons/${platform}.svg`} 
-                        alt={platform}
-                        className="w-5 h-5 invert"
-                      />
-                    </a>
-                  ))}
+                  <a 
+                    href="https://www.instagram.com/shutup.bidit?igsh=MmRtajA4ZTR1ZnI="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
+                  >
+                    <Instagram className="w-5 h-5" />
+                  </a>
+                  <a 
+                    href="https://github.com/biditraj"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
+                  >
+                    <Github className="w-5 h-5" />
+                  </a>
                 </div>
               </div>
             </div>
