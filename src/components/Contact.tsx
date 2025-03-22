@@ -16,10 +16,12 @@ const Contact = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [animationStarted, setAnimationStarted] = useState(false);
 
   // Start animation when section comes into view
-  if (isInView && !controls.getAnimationState().isAnimating) {
+  if (isInView && !animationStarted) {
     controls.start('visible');
+    setAnimationStarted(true);
   }
 
   const variants = {
