@@ -1,7 +1,8 @@
 
 import { useRef, useEffect } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
-import { Code, Layers, Palette, Users } from 'lucide-react';
+import { Code, Layers, Palette, Users, GraduationCap, Calendar, Briefcase } from 'lucide-react';
+import InfiniteScroll from './InfiniteScroll';
 
 const About = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,27 +28,55 @@ const About = () => {
     }),
   };
 
-  const skills = [
+  const skillItems = [
+    { content: "React" },
+    { content: "JavaScript" },
+    { content: "TypeScript" },
+    { content: "HTML5" },
+    { content: "CSS3" },
+    { content: "Tailwind CSS" },
+    { content: "Redux" },
+    { content: "Framer Motion" },
+    { content: "Figma" },
+    { content: "UI/UX Design" },
+    { content: "Responsive Design" },
+    { content: "GSAP" },
+    { content: "Next.js" },
+    { content: "Git" },
+    { content: "Wireframing" },
+    { content: "Prototyping" },
+  ];
+
+  const timelineItems = [
     {
-      icon: <Palette className="h-6 w-6 text-primary" />,
-      title: 'UI/UX Design',
-      description: 'Creating intuitive interfaces with a focus on user experience and accessibility.',
+      year: "2023",
+      title: "UI/UX Designer & Frontend Developer",
+      description: "Leading design and development projects, creating intuitive user interfaces."
     },
     {
-      icon: <Code className="h-6 w-6 text-secondary" />,
-      title: 'Front-End Development',
-      description: 'Building responsive websites and applications with modern technologies.',
+      year: "2022",
+      title: "Frontend Developer",
+      description: "Specialized in React and modern frontend technologies."
     },
     {
-      icon: <Layers className="h-6 w-6 text-accent" />,
-      title: 'Design Systems',
-      description: 'Developing scalable and consistent design systems for efficient workflows.',
+      year: "2021",
+      title: "UI/UX Design Intern",
+      description: "Started journey in design, learning principles and best practices."
+    }
+  ];
+
+  const educationItems = [
+    {
+      year: "Expected Graduation: May 2025",
+      title: "Bachelor of Technology in Computer Science",
+      institution: "National Institute of Science and Technology"
     },
     {
-      icon: <Users className="h-6 w-6 text-primary" />,
-      title: 'User Research',
-      description: 'Conducting user research to create data-driven design solutions.',
-    },
+      year: "Completed",
+      title: "Diploma in ITESM",
+      institution: "Diploma in Information Technology Enabled Services & Management",
+      details: "Aditya Institute of Technology, New Delhi"
+    }
   ];
 
   return (
@@ -59,22 +88,8 @@ const About = () => {
             initial="hidden"
             animate={controls}
             custom={0}
+            className="order-2 md:order-1"
           >
-            <div className="relative">
-              <div className="glass-card w-full aspect-square md:aspect-[3/4] overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?w=600&auto=format&fit=crop&q=80"
-                  alt="Bidit Raj"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-6 -right-6 p-4 glass-card">
-                <p className="text-xl font-medium">5+ Years Experience</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <div>
             <motion.span
               className="tag"
               variants={variants}
@@ -102,7 +117,7 @@ const About = () => {
               animate={controls}
               custom={3}
             >
-              I'm a passionate UI/UX designer and front-end developer with a keen eye for detail and a love for clean, functional design. I specialize in creating user-centric experiences that blend aesthetics with usability.
+              I'm a passionate UI/UX designer and frontend developer with a keen eye for creating beautiful, functional, and user-centered digital experiences.
             </motion.p>
 
             <motion.p
@@ -112,29 +127,95 @@ const About = () => {
               animate={controls}
               custom={4}
             >
-              With expertise in the latest design tools and front-end technologies, I collaborate closely with clients to transform their vision into reality. My approach combines creative thinking with technical expertise to deliver solutions that exceed expectations.
+              With expertise in modern frontend technologies and design tools, I bridge the gap between design and development to build seamless web applications.
             </motion.p>
 
             <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 gap-6"
               variants={variants}
               initial="hidden"
               animate={controls}
               custom={5}
+              className="mb-12"
             >
-              {skills.map((skill, index) => (
-                <div key={index} className="glass-card p-5">
-                  <div className="flex items-start gap-4">
-                    <div className="mt-1">{skill.icon}</div>
-                    <div>
-                      <h3 className="font-medium text-lg mb-2">{skill.title}</h3>
-                      <p className="text-sm text-muted-foreground">{skill.description}</p>
-                    </div>
+              <h3 className="text-xl font-semibold mb-6 flex items-center">
+                <Calendar className="mr-2 h-5 w-5 text-primary" />
+                My Journey
+              </h3>
+              
+              <div className="space-y-8">
+                {timelineItems.map((item, index) => (
+                  <div key={index} className="relative pl-8 border-l border-white/10">
+                    <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-primary"></div>
+                    <span className="text-primary font-medium">{item.year}</span>
+                    <h4 className="font-bold mt-1">{item.title}</h4>
+                    <p className="text-muted-foreground mt-1">{item.description}</p>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </motion.div>
-          </div>
+
+            <motion.div
+              variants={variants}
+              initial="hidden"
+              animate={controls}
+              custom={6}
+            >
+              <h3 className="text-xl font-semibold mb-6 flex items-center">
+                <GraduationCap className="mr-2 h-5 w-5 text-secondary" />
+                Education
+              </h3>
+              
+              <div className="space-y-8">
+                {educationItems.map((item, index) => (
+                  <div key={index} className="relative pl-8 border-l border-white/10">
+                    <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-secondary"></div>
+                    <span className="text-secondary font-medium">{item.year}</span>
+                    <h4 className="font-bold mt-1">{item.title}</h4>
+                    <p className="text-muted-foreground mt-1">{item.institution}</p>
+                    {item.details && <p className="text-sm text-muted-foreground mt-1">{item.details}</p>}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            variants={variants}
+            initial="hidden"
+            animate={controls}
+            custom={1}
+            className="order-1 md:order-2"
+          >
+            <div className="glass-card p-8 mb-10">
+              <h3 className="text-xl font-semibold mb-6 text-center">Skills</h3>
+              <div style={{ height: '400px', position: 'relative' }}>
+                <InfiniteScroll
+                  items={skillItems}
+                  isTilted={true}
+                  tiltDirection='left'
+                  autoplay={true}
+                  autoplaySpeed={0.1}
+                  autoplayDirection="down"
+                  pauseOnHover={true}
+                  width="100%"
+                  itemMinHeight={80}
+                />
+              </div>
+            </div>
+            
+            <div className="relative">
+              <div className="glass-card w-full aspect-square md:aspect-[3/4] overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?w=600&auto=format&fit=crop&q=80"
+                  alt="Bidit Raj"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-6 -right-6 p-4 glass-card">
+                <p className="text-xl font-medium">5+ Years Experience</p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
