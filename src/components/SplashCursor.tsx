@@ -55,7 +55,7 @@ function SplashCursor() {
       const isWebGL2 = !!gl;
       
       if (!isWebGL2) {
-        gl = (canvas.getContext('webgl', params) || 
+        gl = (canvas.getContext('webgl2', params) || 
               canvas.getContext('experimental-webgl', params)) as WebGLRenderingContext | null;
       }
       
