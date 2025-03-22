@@ -42,7 +42,7 @@ const Index = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="min-h-screen"
+        className="min-h-screen relative"
       >
         <Aurora 
           colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
@@ -51,7 +51,9 @@ const Index = () => {
           speed={0.5}
         />
         
-        <Crosshair color="#ffffff" containerRef={containerRef} />
+        <div className="absolute inset-0 pointer-events-none">
+          <Crosshair color="#ffffff" containerRef={containerRef} />
+        </div>
         
         <Navbar />
         <Hero />

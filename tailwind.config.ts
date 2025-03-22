@@ -22,7 +22,7 @@ export default {
 			fontFamily: {
 				sans: ['Inter var', 'Inter', 'sans-serif'],
 				mono: ['JetBrains Mono', 'monospace'],
-                display: ['SF Pro Display', 'Inter', 'sans-serif'],
+                display: ['Space Grotesk', 'SF Pro Display', 'Inter', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -114,6 +114,10 @@ export default {
 				'text-shimmer': {
 					'0%': { backgroundPosition: '100%' },
 					'100%': { backgroundPosition: '0%' }
+				},
+				'bounce': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' }
 				}
 			},
 			animation: {
@@ -126,7 +130,8 @@ export default {
 				'scale-in': 'scale-in 0.4s ease-out forwards',
 				'spin-slow': 'spin-slow 8s linear infinite',
 				'float': 'float 4s ease-in-out infinite',
-				'text-shimmer': 'text-shimmer 2s ease-in-out infinite alternate'
+				'text-shimmer': 'text-shimmer 2s ease-in-out infinite alternate',
+				'bounce': 'bounce 2s ease-in-out infinite'
 			},
 			transitionTimingFunction: {
 				'spring': 'cubic-bezier(0.16, 1, 0.3, 1)',

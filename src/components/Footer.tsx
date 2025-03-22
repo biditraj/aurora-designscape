@@ -1,6 +1,7 @@
 
 import { useRef } from 'react';
 import { ArrowUp } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,14 +15,21 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-muted py-10 relative">
+    <footer className="relative py-10">
+      <div className="absolute inset-0 bg-background/80 backdrop-blur-md z-0"></div>
       <div 
         ref={containerRef}
-        className="container mx-auto px-6"
+        className="container mx-auto px-6 relative z-10"
       >
-        <div className="flex flex-col md:flex-row justify-between items-center">
+        <motion.div 
+          className="flex flex-col md:flex-row justify-between items-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
           <div className="mb-6 md:mb-0">
-            <a href="#hero" className="text-2xl font-bold">
+            <a href="#hero" className="text-2xl font-bold font-display">
               <span className="text-gradient">Bidit</span> <span className="text-foreground">Raj</span>
             </a>
             <p className="text-muted-foreground mt-2">UI/UX Designer & Front-End Developer</p>
@@ -41,7 +49,7 @@ const Footer = () => {
                 <a 
                   key={platform}
                   href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="glass-card w-10 h-10 flex items-center justify-center hover:bg-white/10 transition-colors"
                   aria-label={`Visit ${platform}`}
                 >
                   <img 
@@ -53,23 +61,27 @@ const Footer = () => {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
         
-        <div className="mt-10 pt-6 border-t border-border flex flex-col md:flex-row justify-between items-center">
+        <motion.div 
+          className="mt-10 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
           <p className="text-sm text-muted-foreground">
             © {currentYear} Bidit Raj. All rights reserved.
           </p>
           
-          <div className="flex items-center gap-2 mt-4 md:mt-0">
-            <button
-              onClick={scrollToTop}
-              className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
-              aria-label="Scroll to top"
-            >
-              <ArrowUp size={16} />
-            </button>
-          </div>
-        </div>
+          <button
+            onClick={scrollToTop}
+            className="mt-4 md:mt-0 glass-card p-3 rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-105 group"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp size={16} className="group-hover:-translate-y-1 transition-transform duration-300" />
+          </button>
+        </motion.div>
       </div>
     </footer>
   );

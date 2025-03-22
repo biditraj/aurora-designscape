@@ -5,6 +5,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -108,11 +109,41 @@
   .tag {
     @apply inline-block px-3 py-1 rounded-full text-sm font-medium bg-muted text-muted-foreground;
   }
+  
+  .glass-nav {
+    @apply backdrop-blur-md bg-background/20 border-b border-white/10 transition-all duration-300;
+  }
+  
+  .scroll-indicator {
+    @apply absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center;
+  }
+  
+  .scroll-indicator-text {
+    @apply text-sm text-muted-foreground mb-2;
+  }
+  
+  .scroll-indicator-line {
+    @apply w-[1px] h-10 bg-gradient-to-b from-transparent to-foreground/50;
+  }
+  
+  .mouse-wheel {
+    @apply w-5 h-8 border-2 border-white/30 rounded-full flex justify-center mb-2;
+  }
+  
+  .mouse-wheel:after {
+    content: '';
+    @apply block w-1 h-1.5 bg-white/70 rounded-full mt-1.5 animate-bounce;
+  }
 }
 
 /* Variable proximity text animation */
 .variable-proximity {
-  font-family: "Roboto Flex", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.variable-proximity-title {
+  font-family: "Space Grotesk", sans-serif;
+  line-height: 1.1;
 }
 
 .sr-only {
@@ -154,6 +185,30 @@
 .stagger-animation > *:nth-child(7) { animation-delay: 0.7s; }
 .stagger-animation > *:nth-child(8) { animation-delay: 0.8s; }
 
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.floating {
+  animation: floating 5s ease-in-out infinite;
+}
+
 /* Smooth scrolling styles */
 .scroll-container {
   height: 100vh;
@@ -167,7 +222,26 @@
 }
 
 .scroll-section {
-  height: 100vh;
+  min-height: 100vh;
   scroll-snap-align: start;
   position: relative;
+}
+
+/* Typing animation */
+.typing-text {
+  border-right: 2px solid;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3.5s steps(30) 1s 1 normal both, 
+             cursor-blink 0.7s ease-in-out infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes cursor-blink {
+  0%, 100% { border-color: transparent }
+  50% { border-color: white }
 }
