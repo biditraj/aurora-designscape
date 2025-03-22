@@ -2,7 +2,7 @@
 import { useRef, useEffect } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { Code, Layers, Palette, Users, GraduationCap, Calendar, Briefcase } from 'lucide-react';
-import InfiniteScroll from './InfiniteScroll';
+import { Separator } from '@/components/ui/separator';
 
 const About = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -188,18 +188,15 @@ const About = () => {
           >
             <div className="glass-card p-8 mb-10">
               <h3 className="text-xl font-semibold mb-6 text-center">Skills</h3>
-              <div style={{ height: '400px', position: 'relative' }}>
-                <InfiniteScroll
-                  items={skillItems}
-                  isTilted={true}
-                  tiltDirection='left'
-                  autoplay={true}
-                  autoplaySpeed={0.1}
-                  autoplayDirection="down"
-                  pauseOnHover={true}
-                  width="100%"
-                  itemMinHeight={80}
-                />
+              <div className="grid grid-cols-2 gap-4">
+                {skillItems.map((item, index) => (
+                  <div 
+                    key={index} 
+                    className="glass-card p-3 text-center hover:bg-white/10 transition-all duration-300"
+                  >
+                    {item.content}
+                  </div>
+                ))}
               </div>
             </div>
             
@@ -207,7 +204,7 @@ const About = () => {
               <div className="glass-card w-full aspect-square md:aspect-[3/4] overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?w=600&auto=format&fit=crop&q=80"
-                  alt="Bidit Raj"
+                  alt="Profile"
                   className="w-full h-full object-cover"
                 />
               </div>

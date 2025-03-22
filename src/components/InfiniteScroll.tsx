@@ -19,7 +19,7 @@ export default function InfiniteScroll({
   tiltDirection = "left",      // tiltDirection: "left" or "right"
   // ----- Autoplay Props -----
   autoplay = false,            // Whether it should automatically scroll
-  autoplaySpeed = 0.5,          // Speed (pixels/frame approx.)
+  autoplaySpeed = 0.5,         // Speed (pixels/frame approx.)
   autoplayDirection = "down",  // "down" or "up"
   pauseOnHover = false,        // Pause autoplay on hover
 }) {

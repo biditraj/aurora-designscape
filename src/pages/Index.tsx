@@ -1,7 +1,7 @@
 
 import { useEffect, useRef } from 'react';
 import Aurora from '@/components/Aurora';
-import Crosshair from '@/components/Crosshair';
+import SplashCursor from '@/components/SplashCursor';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
@@ -51,9 +51,7 @@ const Index = () => {
           speed={0.5}
         />
         
-        <div className="absolute inset-0 pointer-events-none">
-          <Crosshair color="#ffffff" containerRef={containerRef} />
-        </div>
+        <SplashCursor />
         
         <Navbar />
         <Hero />
