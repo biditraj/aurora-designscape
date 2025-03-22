@@ -23,8 +23,8 @@ export default function InfiniteScroll({
   autoplayDirection = "down",  // "down" or "up"
   pauseOnHover = false,        // Pause autoplay on hover
 }) {
-  const wrapperRef = useRef(null);
-  const containerRef = useRef(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const getTiltTransform = () => {
     if (!isTilted) return "none";
@@ -38,10 +38,11 @@ export default function InfiniteScroll({
     if (!container) return;
     if (items.length === 0) return;
 
-    const divItems = gsap.utils.toArray(container.children);
+    // Cast the result of gsap.utils.toArray to HTMLElement[]
+    const divItems = gsap.utils.toArray(container.children) as HTMLElement[];
     if (!divItems.length) return;
 
-    const firstItem = divItems[0];
+    const firstItem = divItems[0] as HTMLElement;
     const itemStyle = getComputedStyle(firstItem);
     const itemHeight = firstItem.offsetHeight;
     const itemMarginTop = parseFloat(itemStyle.marginTop) || 0;
@@ -60,10 +61,14 @@ export default function InfiniteScroll({
       type: "wheel,touch,pointer",
       preventDefault: true,
       onPress: ({ target }) => {
-        target.style.cursor = "grabbing";
+        if (target instanceof HTMLElement) {
+          target.style.cursor = "grabbing";
+        }
       },
       onRelease: ({ target }) => {
-        target.style.cursor = "grab";
+        if (target instanceof HTMLElement) {
+          target.style.cursor = "grab";
+        }
       },
       onChange: ({ deltaY, isDragging, event }) => {
         const d = event.type === "wheel" ? -deltaY : deltaY;
@@ -81,7 +86,7 @@ export default function InfiniteScroll({
       }
     });
 
-    let rafId;
+    let rafId: number | undefined;
     if (autoplay) {
       const directionFactor = autoplayDirection === "down" ? 1 : -1;
       const speedPerFrame = autoplaySpeed * directionFactor;
