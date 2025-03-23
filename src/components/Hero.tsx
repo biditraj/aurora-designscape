@@ -22,7 +22,25 @@ const Hero = () => {
           }}
         >
           <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-gradient"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+            }}
+          >
+            <VariableProximity
+              label="Bidit Raj"
+              fromFontVariationSettings="'wght' 400, 'opsz' 9"
+              toFontVariationSettings="'wght' 800, 'opsz' 40"
+              containerRef={containerRef}
+              radius={150}
+              falloff="exponential"
+              className="variable-proximity-title"
+            />
+          </motion.h1>
+          
+          <motion.h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
@@ -37,44 +55,7 @@ const Hero = () => {
               falloff="exponential"
               className="variable-proximity-title"
             />
-          </motion.h1>
-          
-          <motion.div
-            className="mb-8 overflow-hidden"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
-            }}
-          >
-            <motion.h2 
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-gradient"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 1 }}
-            >
-              Bidit Raj
-            </motion.h2>
-          </motion.div>
-          
-          <motion.div
-            className="overflow-hidden w-full max-w-2xl mb-10"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
-            }}
-          >
-            <motion.p 
-              className="text-lg md:text-xl text-muted-foreground typing-text"
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ delay: 0.8, duration: 2 }}
-            >
-              I transform complex problems into elegant, intuitive designs.
-            </motion.p>
-            <p className="text-lg md:text-xl text-muted-foreground mt-2">
-              Let's build something amazing together.
-            </p>
-          </motion.div>
+          </motion.h2>
         </motion.div>
       </div>
     </section>

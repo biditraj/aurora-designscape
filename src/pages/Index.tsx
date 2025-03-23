@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { SplashCursor } from '@/components/ui/splash-cursor';
 import Aurora from '@/components/Aurora';
 import Hero from '@/components/Hero';
-import Skills from '@/components/Skills';
+import BioSection from '@/components/BioSection';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
@@ -16,7 +16,7 @@ const Index = () => {
   
   const navItems = [
     { name: 'Home', url: '#hero', icon: Home },
-    { name: 'Skills', url: '#skills', icon: LightbulbIcon },
+    { name: 'Bio', url: '#bio', icon: User },
     { name: 'Projects', url: '#projects', icon: Briefcase },
     { name: 'Contact', url: '#contact', icon: MessageSquare }
   ];
@@ -41,7 +41,7 @@ const Index = () => {
         
         <NavBar items={navItems} />
         <Hero />
-        <Skills />
+        <BioSection />
         <Projects />
         <Contact />
         <Footer />
