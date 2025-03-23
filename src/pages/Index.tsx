@@ -24,7 +24,6 @@ const Index = () => {
         const targetElement = document.querySelector(anchor.hash);
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: 'smooth' });
-          
           // Update URL without scrolling
           window.history.pushState(null, '', anchor.hash);
         }

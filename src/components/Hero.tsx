@@ -78,7 +78,7 @@ const Hero = () => {
         </motion.div>
         
         <motion.div 
-          className="scroll-indicator absolute bottom-1/2 transform translate-y-1/2 transition-opacity duration-500"
+          className="scroll-indicator absolute bottom-[50%] transform translate-y-[50%] transition-opacity duration-500"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.6, ease: 'easeOut' }}
