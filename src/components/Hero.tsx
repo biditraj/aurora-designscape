@@ -1,5 +1,5 @@
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import VariableProximity from './VariableProximity';
 
@@ -7,32 +7,16 @@ const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
   
-  useEffect(() => {
-    controls.start('visible');
-    
-    // Setup scroll animation for the explore indicator
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        document.querySelector('.scroll-indicator')?.classList.add('opacity-0');
-      } else {
-        document.querySelector('.scroll-indicator')?.classList.remove('opacity-0');
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [controls]);
-
   return (
-    <section id="hero" className="scroll-section flex items-center justify-center pt-20 relative overflow-hidden">
+    <section id="hero" className="scroll-section flex items-center justify-center relative overflow-hidden">
       <div 
         ref={containerRef} 
-        className="container mx-auto px-6 py-16 md:py-32 flex flex-col items-center text-center min-h-screen justify-center"
+        className="container mx-auto px-6 py-16 md:py-28 flex flex-col items-center text-center min-h-screen justify-center"
       >
         <motion.div 
           className="stagger-animation flex flex-col items-center max-w-4xl"
           initial="hidden"
-          animate={controls}
+          animate="visible"
           variants={{
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
@@ -75,19 +59,6 @@ const Hero = () => {
               Let's build something amazing together.
             </p>
           </motion.div>
-        </motion.div>
-        
-        <motion.div 
-          className="scroll-indicator absolute bottom-[50%] transform translate-y-[50%] transition-opacity duration-500"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.6, ease: 'easeOut' }}
-        >
-          <div className="flex flex-col items-center">
-            <div className="mouse-wheel"></div>
-            <span className="scroll-indicator-text">Scroll to explore</span>
-            <div className="scroll-indicator-line"></div>
-          </div>
         </motion.div>
       </div>
     </section>
