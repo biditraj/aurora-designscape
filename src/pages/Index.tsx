@@ -1,22 +1,22 @@
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { SplashCursor } from '@/components/ui/splash-cursor';
 import Aurora from '@/components/Aurora';
 import Hero from '@/components/Hero';
-import About from '@/components/About';
+import Skills from '@/components/Skills';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NavBar } from '@/components/ui/tubelight-navbar';
-import { Home, User, Briefcase, MessageSquare } from 'lucide-react';
+import { Home, User, Briefcase, LightbulbIcon, MessageSquare } from 'lucide-react';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   
   const navItems = [
     { name: 'Home', url: '#hero', icon: Home },
-    { name: 'About', url: '#about', icon: User },
+    { name: 'Skills', url: '#skills', icon: LightbulbIcon },
     { name: 'Projects', url: '#projects', icon: Briefcase },
     { name: 'Contact', url: '#contact', icon: MessageSquare }
   ];
@@ -41,7 +41,7 @@ const Index = () => {
         
         <NavBar items={navItems} />
         <Hero />
-        <About />
+        <Skills />
         <Projects />
         <Contact />
         <Footer />

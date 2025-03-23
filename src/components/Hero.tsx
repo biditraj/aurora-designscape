@@ -1,11 +1,10 @@
 
 import { useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import VariableProximity from './VariableProximity';
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const controls = useAnimation();
   
   return (
     <section id="hero" className="scroll-section flex items-center justify-center relative overflow-hidden">
@@ -39,6 +38,23 @@ const Hero = () => {
               className="variable-proximity-title"
             />
           </motion.h1>
+          
+          <motion.div
+            className="mb-8 overflow-hidden"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+            }}
+          >
+            <motion.h2 
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-gradient"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1 }}
+            >
+              Bidit Raj
+            </motion.h2>
+          </motion.div>
           
           <motion.div
             className="overflow-hidden w-full max-w-2xl mb-10"
