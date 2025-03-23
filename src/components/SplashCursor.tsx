@@ -1,3 +1,4 @@
+
 'use client';
 import { useEffect, useRef } from 'react';
 
@@ -57,17 +58,8 @@ function SplashCursor({
 
     let pointers = [new pointerPrototype()];
 
-    // Fixed typing issues for WebGL context
-    const context = canvas.getContext('webgl2') || canvas.getContext('webgl');
-    if (!context) {
-      console.error('WebGL not supported');
-      return;
-    }
-
-    const gl = context as WebGLRenderingContext;
-    
-    // Helper function to get WebGL context and extensions
-    function getWebGLContext(canvas: HTMLCanvasElement) {
+    // Get WebGL context
+    const getWebGLContext = (canvas: HTMLCanvasElement) => {
       const params = {
         alpha: true,
         depth: false,
@@ -76,35 +68,38 @@ function SplashCursor({
         preserveDrawingBuffer: false,
       };
       
+      // Try WebGL2 first
       let gl = canvas.getContext('webgl2', params) as WebGL2RenderingContext | null;
       const isWebGL2 = !!gl;
       
+      // Fall back to WebGL1 if needed
       if (!isWebGL2) {
         gl = (canvas.getContext('webgl', params) || 
-              canvas.getContext('experimental-webgl', params)) as WebGLRenderingContext;
+              canvas.getContext('experimental-webgl', params)) as WebGLRenderingContext | null;
       }
-
+      
       if (!gl) {
-        throw new Error('WebGL not supported');
+        console.error('WebGL not supported');
+        return { gl: null, ext: null };
       }
 
-      let halfFloat;
-      let supportLinearFiltering;
+      gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+      let halfFloat: any;
+      let supportLinearFiltering: any;
       
       if (isWebGL2) {
         gl.getExtension('EXT_color_buffer_float');
         supportLinearFiltering = gl.getExtension('OES_texture_float_linear');
       } else {
-        halfFloat = gl.getExtension('OES_texture_half_float');
-        supportLinearFiltering = gl.getExtension('OES_texture_half_float_linear');
+        halfFloat = (gl as WebGLRenderingContext).getExtension('OES_texture_half_float');
+        supportLinearFiltering = (gl as WebGLRenderingContext).getExtension('OES_texture_half_float_linear');
       }
-      
-      gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
       const halfFloatTexType = isWebGL2
         ? (gl as WebGL2RenderingContext).HALF_FLOAT
-        : halfFloat ? halfFloat.HALF_FLOAT_OES : gl.FLOAT;
-        
+        : halfFloat?.HALF_FLOAT_OES;
+
       let formatRGBA;
       let formatRG;
       let formatR;
@@ -130,23 +125,27 @@ function SplashCursor({
           supportLinearFiltering,
         },
       };
-    }
+    };
 
-    function getSupportedFormat(gl: WebGLRenderingContext, internalFormat: number, format: number, type: number) {
+    function getSupportedFormat(gl: WebGLRenderingContext | WebGL2RenderingContext, internalFormat: number, format: number, type: number) {
       if (!supportRenderTextureFormat(gl, internalFormat, format, type)) {
-        switch (internalFormat) {
-          case (gl as WebGL2RenderingContext).R16F:
-            return getSupportedFormat(gl, (gl as WebGL2RenderingContext).RG16F, (gl as WebGL2RenderingContext).RG, type);
-          case (gl as WebGL2RenderingContext).RG16F:
-            return getSupportedFormat(gl, (gl as WebGL2RenderingContext).RGBA16F, gl.RGBA, type);
-          default:
-            return null;
+        if (gl instanceof WebGL2RenderingContext) {
+          switch (internalFormat) {
+            case gl.R16F:
+              return getSupportedFormat(gl, gl.RG16F, gl.RG, type);
+            case gl.RG16F:
+              return getSupportedFormat(gl, gl.RGBA16F, gl.RGBA, type);
+            default:
+              return null;
+          }
+        } else {
+          return null;
         }
       }
       return { internalFormat, format };
     }
 
-    function supportRenderTextureFormat(gl: WebGLRenderingContext, internalFormat: number, format: number, type: number) {
+    function supportRenderTextureFormat(gl: WebGLRenderingContext | WebGL2RenderingContext, internalFormat: number, format: number, type: number) {
       const texture = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
@@ -154,15 +153,11 @@ function SplashCursor({
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       gl.texImage2D(gl.TEXTURE_2D, 0, internalFormat, 4, 4, 0, format, type, null);
+      
       const fbo = gl.createFramebuffer();
       gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
-      gl.framebufferTexture2D(
-        gl.FRAMEBUFFER,
-        gl.COLOR_ATTACHMENT0,
-        gl.TEXTURE_2D,
-        texture as WebGLTexture,
-        0
-      );
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+      
       const status = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
       return status === gl.FRAMEBUFFER_COMPLETE;
     }
@@ -180,13 +175,13 @@ function SplashCursor({
 
     // Material class for shader programs
     class Material {
-      vertexShader: string;
+      vertexShader: string | WebGLShader;
       fragmentShaderSource: string;
-      programs: Map<any, any>;
-      activeProgram: any;
-      uniforms: any;
+      programs: Map<number, WebGLProgram>;
+      activeProgram: WebGLProgram | null;
+      uniforms: Map<string, WebGLUniformLocation>;
 
-      constructor(vertexShader: string, fragmentShaderSource: string) {
+      constructor(vertexShader: string | WebGLShader, fragmentShaderSource: string) {
         this.vertexShader = vertexShader;
         this.fragmentShaderSource = fragmentShaderSource;
         this.programs = new Map();
@@ -223,11 +218,14 @@ function SplashCursor({
     }
 
     // Program creation and compilation
-    function createProgram(vertexShader: string, fragmentShader: string) {
+    function createProgram(vertexShader: string | WebGLShader, fragmentShader: string | WebGLShader) {
       let program = gl.createProgram();
       if (!program) throw new Error("Unable to create program");
 
-      let vertexShaderId = compileShader(gl.VERTEX_SHADER, vertexShader);
+      let vertexShaderId = typeof vertexShader === 'string' 
+        ? compileShader(gl.VERTEX_SHADER, vertexShader)
+        : vertexShader;
+        
       let fragmentShaderId = typeof fragmentShader === 'string'
         ? compileShader(gl.FRAGMENT_SHADER, fragmentShader)
         : fragmentShader;
@@ -683,12 +681,6 @@ function SplashCursor({
       }
     `;
 
-    // Utility functions for rendering
-    function blit(target: WebGLFramebuffer | null) {
-      gl.bindFramebuffer(gl.FRAMEBUFFER, target);
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-    }
-
     // FBO creation and management
     class FBO {
       texture: WebGLTexture;
@@ -698,6 +690,8 @@ function SplashCursor({
       texelSizeX: number;
       texelSizeY: number;
       attach: number;
+      format: any;
+      param: any;
 
       constructor(width: number, height: number, texelSizeX: number, texelSizeY: number, format: any, param: any) {
         this.width = width;
@@ -736,8 +730,9 @@ function SplashCursor({
       gl.texImage2D(gl.TEXTURE_2D, 0, format.internalFormat, width, height, 0, format.format, gl.FLOAT, null);
     }
 
-    // Initialize WebGL context and setup
     const { gl: webgl, ext } = getWebGLContext(canvas);
+    if (!webgl || !ext) return;
+    
     const gl = webgl;
 
     // Create materials with shaders
@@ -760,7 +755,7 @@ function SplashCursor({
     displayMaterial.setKeywords(['SHADING']);
 
     // Create vertex buffer for rendering
-    const blit = (() => {
+    const blitFn = (() => {
       gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, -1, 1, 1, 1, 1, -1]), gl.STATIC_DRAW);
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
@@ -833,8 +828,8 @@ function SplashCursor({
       type: number,
       param: number
     ) {
-      let fbo1 = createFBO(w, h, internalFormat, format, type, param);
-      let fbo2 = createFBO(w, h, internalFormat, format, type, param);
+      let fbo1 = createFBO(w, h, 1.0 / w, 1.0 / h, { internalFormat, format }, param);
+      let fbo2 = createFBO(w, h, 1.0 / w, 1.0 / h, { internalFormat, format }, param);
 
       return {
         width: w,
@@ -859,6 +854,12 @@ function SplashCursor({
           fbo2 = temp;
         },
       };
+    }
+
+    // Function to wrap values between min and max
+    function wrap(value: number, min: number, max: number) {
+      const range = max - min;
+      return min + ((value - min) % range + range) % range;
     }
 
     // Resize canvas and FBOs
@@ -900,17 +901,17 @@ function SplashCursor({
         density.read = createFBO(
           dyeWidth,
           dyeHeight,
-          rgba.internalFormat,
-          rgba.format,
-          texType,
+          1.0 / dyeWidth,
+          1.0 / dyeHeight,
+          rgba,
           gl.NEAREST
         );
         density.write = createFBO(
           dyeWidth,
           dyeHeight,
-          rgba.internalFormat,
-          rgba.format,
-          texType,
+          1.0 / dyeWidth,
+          1.0 / dyeHeight,
+          rgba,
           gl.NEAREST
         );
       }
@@ -928,17 +929,17 @@ function SplashCursor({
         velocity.read = createFBO(
           simWidth,
           simHeight,
-          rg.internalFormat,
-          rg.format,
-          texType,
+          1.0 / simWidth,
+          1.0 / simHeight,
+          rg,
           gl.NEAREST
         );
         velocity.write = createFBO(
           simWidth,
           simHeight,
-          rg.internalFormat,
-          rg.format,
-          texType,
+          1.0 / simWidth,
+          1.0 / simHeight,
+          rg,
           gl.NEAREST
         );
       }
@@ -946,17 +947,17 @@ function SplashCursor({
       divergence = createFBO(
         simWidth,
         simHeight,
-        r.internalFormat,
-        r.format,
-        texType,
+        1.0 / simWidth,
+        1.0 / simHeight,
+        r,
         gl.NEAREST
       );
       curl = createFBO(
         simWidth,
         simHeight,
-        r.internalFormat,
-        r.format,
-        texType,
+        1.0 / simWidth,
+        1.0 / simHeight,
+        r,
         gl.NEAREST
       );
       pressure = createDoubleFBO(
@@ -1012,7 +1013,7 @@ function SplashCursor({
         velocity.texelSizeY
       );
       gl.uniform1i(curlProgram.uniforms.get('uVelocity'), velocity.read.attach);
-      blit(curl.fbo);
+      blitFn(curl.fbo);
 
       vorticityProgram.bind();
       gl.uniform2f(
@@ -1027,7 +1028,7 @@ function SplashCursor({
       gl.uniform1i(vorticityProgram.uniforms.get('uCurl'), curl.attach);
       gl.uniform1f(vorticityProgram.uniforms.get('curl'), config.CURL);
       gl.uniform1f(vorticityProgram.uniforms.get('dt'), dt);
-      blit(velocity.write.fbo);
+      blitFn(velocity.write.fbo);
       velocity.swap();
 
       divergenceProgram.bind();
@@ -1040,12 +1041,12 @@ function SplashCursor({
         divergenceProgram.uniforms.get('uVelocity'),
         velocity.read.attach
       );
-      blit(divergence.fbo);
+      blitFn(divergence.fbo);
 
       clearProgram.bind();
       gl.uniform1i(clearProgram.uniforms.get('uTexture'), pressure.read.attach);
       gl.uniform1f(clearProgram.uniforms.get('value'), config.PRESSURE);
-      blit(pressure.write.fbo);
+      blitFn(pressure.write.fbo);
       pressure.swap();
 
       pressureProgram.bind();
@@ -1063,7 +1064,7 @@ function SplashCursor({
           pressureProgram.uniforms.get('uPressure'),
           pressure.read.attach
         );
-        blit(pressure.write.fbo);
+        blitFn(pressure.write.fbo);
         pressure.swap();
       }
 
@@ -1081,7 +1082,7 @@ function SplashCursor({
         gradientSubtractProgram.uniforms.get('uVelocity'),
         velocity.read.attach
       );
-      blit(velocity.write.fbo);
+      blitFn(velocity.write.fbo);
       velocity.swap();
 
       advectionProgram.bind();
@@ -1110,7 +1111,7 @@ function SplashCursor({
         advectionProgram.uniforms.get('dissipation'),
         config.VELOCITY_DISSIPATION
       );
-      blit(velocity.write.fbo);
+      blitFn(velocity.write.fbo);
       velocity.swap();
 
       gl.viewport(0, 0, dyeWidth, dyeHeight);
@@ -1134,7 +1135,7 @@ function SplashCursor({
         advectionProgram.uniforms.get('dissipation'),
         config.DENSITY_DISSIPATION
       );
-      blit(density.write.fbo);
+      blitFn(density.write.fbo);
       density.swap();
     }
 
@@ -1155,7 +1156,7 @@ function SplashCursor({
 
       displayProgram.bind();
       gl.uniform1i(displayProgram.uniforms.get('uTexture'), density.read.attach);
-      blit(null);
+      blitFn(null);
     }
 
     function splatPointer(pointer: any) {
@@ -1178,7 +1179,7 @@ function SplashCursor({
         splatProgram.uniforms.get('radius'),
         correctRadius(config.SPLAT_RADIUS / 100.0)
       );
-      blit(velocity.write.fbo);
+      blitFn(velocity.write.fbo);
       velocity.swap();
 
       gl.viewport(0, 0, dyeWidth, dyeHeight);
@@ -1189,7 +1190,7 @@ function SplashCursor({
         color[1] * 0.3,
         color[2] * 0.3
       );
-      blit(density.write.fbo);
+      blitFn(density.write.fbo);
       density.swap();
     }
 
@@ -1215,7 +1216,7 @@ function SplashCursor({
       pointer.color = generateColor();
     }
 
-    function updatePointerMoveData(pointer: any, posX: number, posY: number, color: any) {
+    function updatePointerMoveData(pointer: any, posX: number, posY: number, color?: number[]) {
       pointer.prevTexcoordX = pointer.texcoordX;
       pointer.prevTexcoordY = pointer.texcoordY;
       pointer.texcoordX = posX / canvas.width;
@@ -1264,25 +1265,25 @@ function SplashCursor({
 
       switch (i % 6) {
         case 0:
-          (r = v), (g = t), (b = p);
+          r = v, g = t, b = p;
           break;
         case 1:
-          (r = q), (g = v), (b = p);
+          r = q, g = v, b = p;
           break;
         case 2:
-          (r = p), (g = v), (b = t);
+          r = p, g = v, b = t;
           break;
         case 3:
-          (r = p), (g = q), (b = v);
+          r = p, g = q, b = v;
           break;
         case 4:
-          (r = t), (g = p), (b = v);
+          r = t, g = p, b = v;
           break;
         case 5:
-          (r = v), (g = p), (b = q);
+          r = v, g = p, b = q;
           break;
         default:
-          (r = 0), (g = 0), (b = 0);
+          r = 0, g = 0, b = 0;
       }
 
       return {
@@ -1360,19 +1361,15 @@ function SplashCursor({
       }
     });
 
-    window.addEventListener(
-      'touchmove',
-      (e) => {
-        const touches = e.targetTouches;
-        let pointer = pointers[0];
-        for (let i = 0; i < touches.length; i++) {
-          let posX = scaleByPixelRatio(touches[i].clientX);
-          let posY = scaleByPixelRatio(touches[i].clientY);
-          updatePointerMoveData(pointer, posX, posY, pointer.color);
-        }
-      },
-      false
-    );
+    window.addEventListener('touchmove', (e) => {
+      const touches = e.targetTouches;
+      let pointer = pointers[0];
+      for (let i = 0; i < touches.length; i++) {
+        let posX = scaleByPixelRatio(touches[i].clientX);
+        let posY = scaleByPixelRatio(touches[i].clientY);
+        updatePointerMoveData(pointer, posX, posY, pointer.color);
+      }
+    }, false);
 
     window.addEventListener('touchend', (e) => {
       const touches = e.changedTouches;
@@ -1382,7 +1379,6 @@ function SplashCursor({
       }
     });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     SIM_RESOLUTION,
     DYE_RESOLUTION,
