@@ -273,3 +273,132 @@ export const gradientSubtractShaderSource = `
       gl_FragColor = vec4(velocity, 0.0, 1.0);
   }
 `;
+
+// Adding the missing shaders that are imported in splash-cursor.tsx
+export const mainVertexShader = `
+  precision highp float;
+  attribute vec2 aPosition;
+  varying vec2 vUv;
+  
+  void main() {
+    vUv = aPosition * 0.5 + 0.5;
+    gl_Position = vec4(aPosition, 0.0, 1.0);
+  }
+`;
+
+export const mainFragmentShader = `
+  precision highp float;
+  varying vec2 vUv;
+  uniform vec2 u_resolution;
+  uniform float u_time;
+  uniform int u_frame;
+  uniform vec2 u_mouse;
+  uniform int u_renderpass;
+  uniform sampler2D u_texture;
+  uniform float u_radius;
+  uniform float u_intensity;
+  uniform vec3 u_color;
+  uniform float u_falloff;
+  
+  void main() {
+    if (u_renderpass == 0) {
+      // First pass - initial drawing
+      float dist = distance(vec2(u_mouse.x, u_mouse.y), vUv);
+      float alpha = smoothstep(u_radius, u_radius * (1.0 - u_falloff), dist);
+      gl_FragColor = vec4(u_color, alpha * u_intensity);
+    } else {
+      // Second pass - composite with previous frame
+      vec4 texColor = texture2D(u_texture, vUv);
+      gl_FragColor = texColor;
+    }
+  }
+`;
+
+export const hdrFragmentShader = `
+  precision highp float;
+  varying vec2 vUv;
+  uniform sampler2D u_texture;
+  
+  void main() {
+    vec4 color = texture2D(u_texture, vUv);
+    // Simple HDR effect
+    color = color / (1.0 + color);
+    gl_FragColor = color;
+  }
+`;
+
+export const gaussianBlurXFragmentShader = `
+  precision highp float;
+  varying vec2 vUv;
+  uniform sampler2D u_texture;
+  uniform vec2 u_resolution;
+  uniform float u_blur;
+  uniform int u_taps;
+  
+  void main() {
+    vec4 color = vec4(0.0);
+    float total = 0.0;
+    
+    float offset = u_blur / u_resolution.x;
+    
+    for (int i = -15; i <= 15; i++) {
+      if (i > u_taps || i < -u_taps) continue;
+      float weight = exp(-float(i) * float(i) / (2.0 * u_blur * u_blur));
+      color += texture2D(u_texture, vUv + vec2(float(i) * offset, 0.0)) * weight;
+      total += weight;
+    }
+    
+    gl_FragColor = color / total;
+  }
+`;
+
+export const gaussianBlurYFragmentShader = `
+  precision highp float;
+  varying vec2 vUv;
+  uniform sampler2D u_texture;
+  uniform vec2 u_resolution;
+  uniform float u_blur;
+  uniform int u_taps;
+  
+  void main() {
+    vec4 color = vec4(0.0);
+    float total = 0.0;
+    
+    float offset = u_blur / u_resolution.y;
+    
+    for (int i = -15; i <= 15; i++) {
+      if (i > u_taps || i < -u_taps) continue;
+      float weight = exp(-float(i) * float(i) / (2.0 * u_blur * u_blur));
+      color += texture2D(u_texture, vUv + vec2(0.0, float(i) * offset)) * weight;
+      total += weight;
+    }
+    
+    gl_FragColor = color / total;
+  }
+`;
+
+export const pingPongVertexShader = `
+  precision highp float;
+  attribute vec2 aPosition;
+  varying vec2 vUv;
+  
+  void main() {
+    vUv = aPosition * 0.5 + 0.5;
+    gl_Position = vec4(aPosition, 0.0, 1.0);
+  }
+`;
+
+export const pingPongFragmentShader = `
+  precision highp float;
+  varying vec2 vUv;
+  uniform sampler2D u_ping;
+  uniform sampler2D u_pong;
+  
+  void main() {
+    vec4 pingColor = texture2D(u_ping, vUv);
+    vec4 pongColor = texture2D(u_pong, vUv);
+    
+    // Blend current frame with previous frame for persistence effect
+    gl_FragColor = mix(pongColor, pingColor, 0.05);
+  }
+`;
