@@ -20,9 +20,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter var', 'Inter', 'sans-serif'],
+				sans: ['Syne', 'sans-serif'],
 				mono: ['JetBrains Mono', 'monospace'],
-                display: ['Space Grotesk', 'SF Pro Display', 'Inter', 'sans-serif'],
+                display: ['Syne', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

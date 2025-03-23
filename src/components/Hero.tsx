@@ -38,16 +38,6 @@ const Hero = () => {
             visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
           }}
         >
-          <motion.span 
-            className="tag mb-4"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
-            }}
-          >
-            UI/UX Designer & Front-End Developer
-          </motion.span>
-          
           <motion.h1 
             className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
             variants={{
@@ -88,7 +78,7 @@ const Hero = () => {
         </motion.div>
         
         <motion.div 
-          className="scroll-indicator absolute bottom-10 transition-opacity duration-500"
+          className="scroll-indicator absolute bottom-1/2 transform translate-y-1/2 transition-opacity duration-500"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.6, ease: 'easeOut' }}

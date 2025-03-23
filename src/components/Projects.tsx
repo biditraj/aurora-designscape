@@ -58,7 +58,6 @@ const Projects = () => {
           custom={0}
           className="text-center mb-16"
         >
-          <span className="tag">My Work</span>
           <h2 className="text-3xl md:text-4xl font-bold mt-3 mb-6">
             Selected <span className="text-gradient">Projects</span>
           </h2>

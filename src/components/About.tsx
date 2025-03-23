@@ -70,7 +70,6 @@ const About = () => {
           custom={0}
           className="text-center mb-16"
         >
-          <span className="tag">About Me</span>
           <h2 className="text-3xl md:text-4xl font-bold mt-3 mb-6">
             Transforming <span className="text-gradient">ideas</span> into engaging digital experiences
           </h2>
