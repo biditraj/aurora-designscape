@@ -1,7 +1,7 @@
 
 import { useEffect, useRef } from 'react';
+import { SplashCursor } from '@/components/ui/splash-cursor';
 import Aurora from '@/components/Aurora';
-import SplashCursor from '@/components/SplashCursor';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
