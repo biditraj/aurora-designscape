@@ -1,21 +1,21 @@
-
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { Send, Mail, MapPin, Phone, Instagram, Github } from 'lucide-react';
+import { useForm, ValidationError } from '@formspree/react';
+import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
   const controls = useAnimation();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formState, setFormState] = useState({
     name: '',
-    email: '',
     subject: '',
-    message: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formspreeState, handleSubmit] = useForm("mzzegvyk");
   const [animationStarted, setAnimationStarted] = useState(false);
 
   // Start animation when section comes into view
@@ -23,6 +23,27 @@ const Contact = () => {
     controls.start('visible');
     setAnimationStarted(true);
   }
+
+  // Handle form success and redirect
+  useEffect(() => {
+    if (formspreeState.succeeded) {
+      toast({
+        title: "Message sent!",
+        description: "Thanks for reaching out. I'll get back to you soon.",
+      });
+      
+      // Reset form state
+      setFormState({
+        name: '',
+        subject: '',
+      });
+      
+      // Redirect to home page after a short delay
+      setTimeout(() => {
+        navigate('/');
+      }, 1500);
+    }
+  }, [formspreeState.succeeded, toast, navigate]);
 
   const variants = {
     hidden: { opacity: 0, y: 20 },
@@ -37,29 +58,9 @@ const Contact = () => {
     }),
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormState(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "Message sent!",
-        description: "Thanks for reaching out. I'll get back to you soon.",
-      });
-      setFormState({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-      });
-      setIsSubmitting(false);
-    }, 1500);
   };
 
   const contactInfo = [
@@ -137,9 +138,13 @@ const Contact = () => {
                       id="email"
                       name="email"
                       required
-                      value={formState.email}
-                      onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none transition-colors"
+                    />
+                    <ValidationError 
+                      prefix="Email" 
+                      field="email"
+                      errors={formspreeState.errors}
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
                   
@@ -166,18 +171,22 @@ const Contact = () => {
                       name="message"
                       rows={5}
                       required
-                      value={formState.message}
-                      onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none transition-colors resize-none"
                     ></textarea>
+                    <ValidationError 
+                      prefix="Message" 
+                      field="message"
+                      errors={formspreeState.errors}
+                      className="text-red-500 text-sm mt-1"
+                    />
                   </div>
                   
                   <button
                     type="submit"
                     className="btn-primary w-full flex items-center justify-center gap-2"
-                    disabled={isSubmitting}
+                    disabled={formspreeState.submitting}
                   >
-                    {isSubmitting ? (
+                    {formspreeState.submitting ? (
                       'Sending...'
                     ) : (
                       <>
