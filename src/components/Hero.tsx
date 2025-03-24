@@ -1,4 +1,3 @@
-
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import VariableProximity from './VariableProximity';
@@ -10,7 +9,7 @@ const Hero = () => {
     <section id="hero" className="scroll-section flex items-center justify-center relative overflow-hidden">
       <div 
         ref={containerRef} 
-        className="container mx-auto px-6 py-16 md:py-28 flex flex-col items-center text-center min-h-screen justify-center"
+        className="container mx-auto px-6 py-12 md:py-20 flex flex-col items-center text-center min-h-screen justify-center"
       >
         <motion.div 
           className="stagger-animation flex flex-col items-center max-w-4xl"

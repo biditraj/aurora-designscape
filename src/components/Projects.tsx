@@ -1,18 +1,33 @@
-
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Github, X, Loader2 } from 'lucide-react';
 
 const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const controls = useAnimation();
+  const [popupUrl, setPopupUrl] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
 
   useEffect(() => {
     if (isInView) {
       controls.start('visible');
     }
   }, [isInView, controls]);
+
+  useEffect(() => {
+    if (isLoading) {
+      let count = 0;
+      const texts = ['Loading project', 'Initializing demo', 'Almost ready', 'Launching experience'];
+      const interval = setInterval(() => {
+        setLoadingText(texts[count % texts.length]);
+        count++;
+      }, 1500);
+      
+      return () => clearInterval(interval);
+    }
+  }, [isLoading]);
 
   const variants = {
     hidden: { opacity: 0, y: 20 },
@@ -29,24 +44,36 @@ const Projects = () => {
 
   const projects = [
     {
-      title: 'EcoTrack Mobile App',
-      description: 'A sustainability tracking application that helps users reduce their carbon footprint through personalized recommendations.',
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&auto=format&fit=crop&q=80',
-      tags: ['UI/UX Design', 'Mobile App', 'React Native'],
+      title: 'Love Wave Calculator',
+      description: 'Interactive love compatibility calculator with beautiful wave animations and engaging user experience.',
+      image: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&auto=format&fit=crop&q=80',
+      tags: ['React', 'Animation', 'UI/UX Design'],
+      liveUrl: 'https://lovesyn.vercel.app/',
+      githubUrl: 'https://github.com/biditraj/love-wave-calculator'
     },
     {
-      title: 'Artisan E-commerce Platform',
-      description: 'A custom e-commerce solution for artisans and craftspeople to showcase and sell their handmade products.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80',
-      tags: ['E-commerce', 'UI Design', 'React'],
-    },
-    {
-      title: 'Healthcare Dashboard',
-      description: 'An intuitive analytics dashboard for healthcare providers to monitor patient data and treatment outcomes.',
-      image: 'https://images.unsplash.com/photo-1624953587687-daf255b6b80a?w=600&auto=format&fit=crop&q=80',
-      tags: ['Dashboard', 'Data Visualization', 'Angular'],
+      title: 'Cinesear - Movie Search App',
+      description: 'Modern movie search application with sleek design, offering quick access to movie information and ratings.',
+      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&auto=format&fit=crop&q=80',
+      tags: ['React', 'API Integration', 'Responsive Design'],
+      liveUrl: 'https://cinesear.vercel.app/',
+      githubUrl: 'https://github.com/biditraj/aurora-designscape'
     },
   ];
+
+  const openPopup = (url: string) => {
+    setIsLoading(true);
+    setPopupUrl(url);
+    // Simulate a slight delay for the loading animation to be visible
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  };
+
+  const closePopup = () => {
+    setPopupUrl(null);
+    setIsLoading(false);
+  };
 
   return (
     <section id="projects" ref={sectionRef} className="scroll-section pt-20 relative overflow-hidden">
@@ -62,11 +89,11 @@ const Projects = () => {
             Selected <span className="text-gradient">Projects</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore a collection of my recent work spanning various industries and design challenges.
+            Explore a selection of my real-world projects showcasing my design and development skills.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={index}
@@ -94,13 +121,24 @@ const Projects = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3">{project.title}</h3>
                 <p className="text-muted-foreground mb-4">{project.description}</p>
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 text-primary font-medium group-hover:underline"
-                >
-                  View Project 
-                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-                </a>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => openPopup(project.liveUrl)}
+                    className="inline-flex items-center gap-2 text-primary font-medium hover:underline transition-all duration-300"
+                  >
+                    Live Demo
+                    <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </button>
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-secondary font-medium hover:underline"
+                  >
+                    <Github size={16} />
+                    Source Code
+                  </a>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -118,6 +156,45 @@ const Projects = () => {
           </a>
         </motion.div>
       </div>
+
+      {/* Project Preview Popup/Modal */}
+      {popupUrl && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative w-full max-w-5xl h-[80vh] bg-card rounded-xl overflow-hidden">
+            <div className="absolute top-4 right-4 z-10">
+              <button 
+                onClick={closePopup}
+                className="h-10 w-10 rounded-full bg-background/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-background/80 transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center w-full h-full">
+                <Loader2 className="h-12 w-12 text-primary animate-spin mb-4" />
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-gradient text-2xl font-bold relative"
+                >
+                  {loadingText}
+                  <span className="ml-1 animate-pulse">...</span>
+                </motion.div>
+              </div>
+            ) : (
+              <iframe 
+                src={popupUrl} 
+                title="Project Preview" 
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 };

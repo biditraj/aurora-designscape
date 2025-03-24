@@ -1,9 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
@@ -101,7 +101,7 @@
   }
   
   .section {
-    @apply py-24 px-6 md:px-8 max-w-7xl mx-auto;
+    @apply py-12 px-6 md:px-8 max-w-7xl mx-auto;
   }
   
   .tag {
