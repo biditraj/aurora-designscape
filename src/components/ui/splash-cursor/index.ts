@@ -1,4 +1,3 @@
-
-import { SplashCursor } from "./splash-cursor";
+import { SplashCursor } from "../splash-cursor";
 
 export { SplashCursor };

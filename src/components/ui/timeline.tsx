@@ -12,7 +12,7 @@ export interface TimelineEntry {
   content: React.ReactNode;
 }
 
-const Timeline = ({ data }: { data: TimelineEntry[] }) => {
+export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
@@ -47,26 +47,16 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <div
-      className="w-full bg-background font-sans md:px-10"
+      className="w-full bg-transparent font-sans md:px-10"
       ref={containerRef}
     >
       <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
-        <motion.h2 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-lg md:text-4xl mb-4 text-foreground max-w-4xl font-bold"
-        >
+        <h2 className="text-lg md:text-4xl mb-4 text-foreground max-w-4xl">
           My Journey Through <span className="text-gradient">Design & Development</span>
-        </motion.h2>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-muted-foreground text-sm md:text-base max-w-3xl"
-        >
+        </h2>
+        <p className="text-muted-foreground text-sm md:text-base max-w-3xl">
           Explore the timeline of my career growth as a designer and developer. From my early days as an intern to my current role leading UI/UX design and frontend development projects, this journey showcases my passion for creating exceptional digital experiences.
-        </motion.p>
+        </p>
       </div>
 
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
@@ -112,6 +102,4 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
       </div>
     </div>
   );
-};
-
-export default Timeline; 
+}; 

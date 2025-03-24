@@ -1,9 +1,8 @@
-
 import { useRef, useEffect } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
-import { Calendar, GraduationCap } from 'lucide-react';
 import DisplayCards from './ui/display-cards';
-import { Code, Palette, Github, Zap, Layers, Star } from 'lucide-react';
+import { Code, Palette, Zap } from 'lucide-react';
+import { Timeline, TimelineEntry } from './ui/timeline';
 
 const BioSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -29,36 +28,93 @@ const BioSection = () => {
     }),
   };
 
-  const timelineItems = [
+  // Timeline data with all the content
+  const timelineItems: TimelineEntry[] = [
     {
-      year: "2023",
-      title: "UI/UX Designer & Frontend Developer",
-      description: "Leading design and development projects, creating intuitive user interfaces."
+      title: "2023",
+      content: (
+        <div>
+          <h4 className="text-xl font-bold mb-4">UI/UX Designer & Frontend Developer</h4>
+          <p className="text-foreground text-sm mb-6">
+            Leading design and development projects, creating intuitive user interfaces.
+          </p>
+          <div className="space-y-4 mb-6">
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Led multiple design projects using Figma and Adobe XD
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Developed responsive web applications with React and Next.js
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Implemented modern UI components and animations
+            </div>
+          </div>
+        </div>
+      ),
     },
     {
-      year: "2022",
-      title: "Frontend Developer",
-      description: "Specialized in React and modern frontend technologies."
+      title: "2022",
+      content: (
+        <div>
+          <h4 className="text-xl font-bold mb-4">Frontend Developer</h4>
+          <p className="text-foreground text-sm mb-6">
+            Specialized in React and modern frontend technologies.
+          </p>
+          <div className="space-y-4 mb-6">
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Built and maintained reusable component libraries
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Collaborated with design teams to implement pixel-perfect UIs
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Optimized web applications for performance and accessibility
+            </div>
+          </div>
+        </div>
+      ),
     },
     {
-      year: "2021",
-      title: "UI/UX Design Intern",
-      description: "Started journey in design, learning principles and best practices."
-    }
-  ];
+      title: "2021",
+      content: (
+        <div>
+          <h4 className="text-xl font-bold mb-4">UI/UX Design Intern</h4>
+          <p className="text-foreground text-sm mb-6">
+            Started journey in design, learning principles and best practices.
+          </p>
+          <div className="space-y-4 mb-6">
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Completed comprehensive UI/UX design training
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Created wireframes and prototypes for mobile applications
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Participated in user research and usability testing
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Education",
+      content: (
+        <div>
+          <div className="mb-8">
+            <h4 className="text-xl font-bold mb-2">Bachelor of Technology in Computer Science</h4>
+            <p className="text-foreground text-sm">National Institute of Science and Technology</p>
+            <p className="text-foreground text-sm italic">Expected Graduation: May 2025</p>
+          </div>
 
-  const educationItems = [
-    {
-      year: "Expected Graduation: May 2025",
-      title: "Bachelor of Technology in Computer Science",
-      institution: "National Institute of Science and Technology"
+          <div>
+            <h4 className="text-xl font-bold mb-2">Diploma in ITESM</h4>
+            <p className="text-foreground text-sm">Diploma in Information Technology Enabled Services & Management</p>
+            <p className="text-foreground text-sm">Aditya Institute of Technology, New Delhi</p>
+            <p className="text-foreground text-sm italic">Completed</p>
+          </div>
+        </div>
+      ),
     },
-    {
-      year: "Completed",
-      title: "Diploma in ITESM",
-      institution: "Diploma in Information Technology Enabled Services & Management",
-      details: "Aditya Institute of Technology, New Delhi"
-    }
   ];
 
   const skillCards = [
@@ -92,101 +148,19 @@ const BioSection = () => {
   ];
 
   return (
-    <section id="bio" ref={sectionRef} className="scroll-section pt-20 relative overflow-hidden">
-      <div className="container mx-auto px-6 py-16 md:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          <motion.div
-            variants={variants}
-            initial="hidden"
-            animate={controls}
-            custom={1}
-          >
-            <motion.h2
-              className="text-3xl md:text-4xl font-bold mt-3 mb-6"
-              variants={variants}
-              initial="hidden"
-              animate={controls}
-              custom={0}
-            >
-              Transforming <span className="text-gradient">ideas</span> into engaging digital experiences
-            </motion.h2>
-
-            <motion.p
-              className="text-lg text-muted-foreground mb-6"
-              variants={variants}
-              initial="hidden"
-              animate={controls}
-              custom={2}
-            >
-              I'm a passionate UI/UX designer and frontend developer with a keen eye for creating beautiful, functional, and user-centered digital experiences.
-            </motion.p>
-
-            <motion.p
-              className="text-lg text-muted-foreground mb-10"
-              variants={variants}
-              initial="hidden"
-              animate={controls}
-              custom={3}
-            >
-              With expertise in modern frontend technologies and design tools, I bridge the gap between design and development to build seamless web applications.
-            </motion.p>
-
-            <motion.div
-              variants={variants}
-              initial="hidden"
-              animate={controls}
-              custom={4}
-              className="mb-12"
-            >
-              <h3 className="text-xl font-semibold mb-6 flex items-center">
-                <Calendar className="mr-2 h-5 w-5 text-primary" />
-                My Journey
-              </h3>
-              
-              <div className="space-y-8">
-                {timelineItems.map((item, index) => (
-                  <div key={index} className="relative pl-8 border-l border-white/10">
-                    <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-primary"></div>
-                    <span className="text-primary font-medium">{item.year}</span>
-                    <h4 className="font-bold mt-1">{item.title}</h4>
-                    <p className="text-muted-foreground mt-1">{item.description}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={variants}
-              initial="hidden"
-              animate={controls}
-              custom={5}
-              className="mb-12"
-            >
-              <h3 className="text-xl font-semibold mb-6 flex items-center">
-                <GraduationCap className="mr-2 h-5 w-5 text-secondary" />
-                Education
-              </h3>
-              
-              <div className="space-y-8">
-                {educationItems.map((item, index) => (
-                  <div key={index} className="relative pl-8 border-l border-white/10">
-                    <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-secondary"></div>
-                    <span className="text-secondary font-medium">{item.year}</span>
-                    <h4 className="font-bold mt-1">{item.title}</h4>
-                    <p className="text-muted-foreground mt-1">{item.institution}</p>
-                    {item.details && <p className="text-sm text-muted-foreground mt-1">{item.details}</p>}
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
+    <section id="bio" ref={sectionRef} className="scroll-section pt-20 pb-32 relative overflow-visible">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-start relative">
+          <div className="lg:order-1 w-full">
+            <Timeline data={timelineItems} />
+          </div>
           
           <motion.div
             variants={variants}
             initial="hidden"
-            animate={controls}
-            custom={6}
-            className="flex items-center justify-center"
+            animate="visible"
+            custom={1}
+            className="flex items-center justify-center lg:order-2 min-h-[500px] z-20 relative"
           >
             <div className="w-full max-w-xl">
               <DisplayCards cards={skillCards} />

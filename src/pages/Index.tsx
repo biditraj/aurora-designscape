@@ -1,4 +1,3 @@
-
 import { useRef } from 'react';
 import { SplashCursor } from '@/components/ui/splash-cursor';
 import Aurora from '@/components/Aurora';
@@ -9,7 +8,8 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NavBar } from '@/components/ui/tubelight-navbar';
-import { Home, User, Briefcase, LightbulbIcon, MessageSquare } from 'lucide-react';
+import { Home, User, Briefcase, LightbulbIcon, MessageSquare, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
