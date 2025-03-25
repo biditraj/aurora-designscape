@@ -42,6 +42,16 @@ const Projects = () => {
     }),
   };
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact-form');
+    if (contactSection) {
+      contactSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   const projects = [
     {
       title: 'Love Wave Calculator',
@@ -151,9 +161,9 @@ const Projects = () => {
           custom={4}
           className="text-center mt-12"
         >
-          <a href="#contact" className="btn-primary">
+          <button onClick={scrollToContact} className="btn-primary">
             Let's Work Together
-          </a>
+          </button>
         </motion.div>
       </div>
 

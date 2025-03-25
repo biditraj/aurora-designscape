@@ -112,7 +112,7 @@ const Contact = () => {
           >
             <div className="glass-card p-8">
               <h3 className="text-2xl font-bold mb-6">Send Me a Message</h3>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} id="contact-form">
                 <div className="space-y-5">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -239,6 +239,7 @@ const Contact = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
+                    aria-label="Instagram Profile"
                   >
                     <Instagram className="w-5 h-5" />
                   </a>
@@ -247,6 +248,7 @@ const Contact = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
+                    aria-label="GitHub Profile"
                   >
                     <Github className="w-5 h-5" />
                   </a>
