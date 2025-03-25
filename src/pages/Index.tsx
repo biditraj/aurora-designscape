@@ -28,6 +28,7 @@ const Index = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         className="min-h-screen relative"
+        style={{ position: 'relative' }} // Fix for framer-motion scroll offset warning
       >
         <Aurora 
           colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
