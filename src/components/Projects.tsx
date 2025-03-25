@@ -6,24 +6,21 @@ import { ChevronRight } from 'lucide-react';
 const projects = [
   {
     id: 1,
-    title: 'AI-Powered Analytics Dashboard',
-    description: 'A dashboard that uses AI to provide insights from complex data sets, built with React, TypeScript, and TensorFlow.js.',
-    tags: ['React', 'TypeScript', 'AI', 'Data Visualization'],
-    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070'
+    title: 'CeneSearch',
+    description: 'A movie search web application that allows users to discover and explore films with a modern interface and comprehensive details.',
+    tags: ['React', 'API Integration', 'Responsive Design', 'Search Functionality'],
+    imageUrl: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2069',
+    liveUrl: 'https://cinesear.vercel.app/',
+    githubUrl: 'https://github.com/biditraj/moviewebappbidit-main'
   },
   {
     id: 2,
-    title: 'E-commerce Platform Redesign',
-    description: 'Complete overhaul of an e-commerce platform focusing on accessibility and user experience, resulting in a 40% increase in conversion rates.',
-    tags: ['UX/UI', 'Figma', 'Next.js', 'Stripe'],
-    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015'
-  },
-  {
-    id: 3,
-    title: 'Blockchain Voting System',
-    description: 'A secure and transparent voting system built on blockchain technology, enabling verifiable and tamper-proof elections.',
-    tags: ['Blockchain', 'Solidity', 'Web3', 'Security'],
-    imageUrl: 'https://images.unsplash.com/photo-1526378800651-c1a63a4d8837?q=80&w=2069'
+    title: 'LoveSync',
+    description: 'An interactive love calculator app that creates an engaging experience for users to check their compatibility with others.',
+    tags: ['JavaScript', 'Animation', 'Interactive Design', 'Frontend'],
+    imageUrl: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2070',
+    liveUrl: 'https://lovesyn.vercel.app/',
+    githubUrl: 'https://github.com/biditraj/love-wave-calculator'
   }
 ];
 
@@ -45,13 +42,13 @@ const Projects = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Selected Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">My Projects</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Here's a selection of projects I've worked on. Each project presented unique challenges that I enjoyed solving.
+            Here are some of the projects I've built. Click on the links to view the live demos or explore the code on GitHub.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -78,9 +75,14 @@ const Projects = () => {
                     </span>
                   ))}
                 </div>
-                <a href="#" className="text-primary inline-flex items-center text-sm font-medium">
-                  View Project <ChevronRight className="ml-1 h-4 w-4" />
-                </a>
+                <div className="flex gap-4">
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-primary inline-flex items-center text-sm font-medium">
+                    Live Demo <ChevronRight className="ml-1 h-4 w-4" />
+                  </a>
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="text-primary inline-flex items-center text-sm font-medium">
+                    GitHub <ChevronRight className="ml-1 h-4 w-4" />
+                  </a>
+                </div>
               </div>
             </motion.div>
           ))}

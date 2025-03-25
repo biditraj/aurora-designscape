@@ -8,7 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Github, Instagram, Mail } from 'lucide-react';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -61,16 +61,13 @@ const Contact = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Let's Connect</h2>
           
           <div className="flex justify-center space-x-6 mb-12">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
+            <a href="https://github.com/biditraj" target="_blank" rel="noopener noreferrer" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
               <Github className="h-6 w-6" />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
-              <Linkedin className="h-6 w-6" />
+            <a href="https://www.instagram.com/shutup.bidit?igsh=MmRtajA4ZTR1ZnI=" target="_blank" rel="noopener noreferrer" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
+              <Instagram className="h-6 w-6" />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
-              <Twitter className="h-6 w-6" />
-            </a>
-            <a href="mailto:hello@example.com" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
+            <a href="mailto:biditraj@gmail.com" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
               <Mail className="h-6 w-6" />
             </a>
           </div>
