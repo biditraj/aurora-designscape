@@ -156,13 +156,7 @@ const BioSection = () => {
           custom={0}
           className="mb-10 max-w-3xl mx-auto text-center"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
-          <p className="text-lg text-foreground/80">
-            I'm a frontend developer and UI/UX designer from Bihar, based in New Delhi. With a Diploma in ITESM (2020) and currently pursuing a B.Tech in CSE, I specialize in React, Tailwind CSS, and Figma.
-          </p>
-          <p className="text-lg text-foreground/80 mt-4">
-            I've worked on projects like HRMS, PTE app, and career pages and interned at Tech Access (2020) and The Assigner (2024-2025). Passionate about crafting seamless digital experiences, I focus on modern UI development, performance optimization, and accessibility.
-          </p>
+          {/* Removed About Me section */}
         </motion.div>
         
         <div className="max-w-5xl mx-auto mb-10">
