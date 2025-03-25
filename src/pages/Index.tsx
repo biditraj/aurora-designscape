@@ -1,5 +1,4 @@
-
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { SplashCursor } from '@/components/ui/splash-cursor';
 import Aurora from '@/components/Aurora';
 import Hero from '@/components/Hero';
@@ -7,18 +6,27 @@ import BioSection from '@/components/BioSection';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
 import { motion, AnimatePresence } from 'framer-motion';
-import { NavBar } from '@/components/ui/tubelight-navbar';
-import { Home, User, Briefcase, MessageSquare } from 'lucide-react';
+import { CustomSidebar } from '@/components/ui/custom-sidebar';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
   
-  const navItems = [
-    { name: 'Home', url: '#hero', icon: Home },
-    { name: 'Bio', url: '#bio', icon: User },
-    { name: 'Projects', url: '#projects', icon: Briefcase },
-    { name: 'Contact', url: '#contact', icon: MessageSquare }
-  ];
+  // Check if the device is desktop (screen width > 768px)
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth > 768);
+    };
+    
+    // Initial check
+    checkDesktop();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkDesktop);
+    
+    // Clean up event listener on component unmount
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -37,13 +45,19 @@ const Index = () => {
           speed={0.5}
         />
         
-        <SplashCursor />
+        {/* Only render SplashCursor on desktop */}
+        {isDesktop && <SplashCursor />}
         
-        <NavBar items={navItems} />
-        <Hero />
-        <BioSection />
-        <Projects />
-        <Contact />
+        {/* New sidebar navigation */}
+        <CustomSidebar />
+        
+        {/* Main content with proper padding */}
+        <div className="md:pl-16 pb-24 md:pb-0">
+          <Hero />
+          <BioSection />
+          <Projects />
+          <Contact />
+        </div>
       </motion.div>
     </AnimatePresence>
   );

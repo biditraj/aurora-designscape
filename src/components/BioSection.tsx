@@ -1,7 +1,5 @@
 import { useRef, useEffect } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
-import DisplayCards from './ui/display-cards';
-import { Code, Palette, Zap } from 'lucide-react';
 import { Timeline, TimelineEntry } from './ui/timeline';
 
 const BioSection = () => {
@@ -138,36 +136,6 @@ const BioSection = () => {
     },
   ];
 
-  const skillCards = [
-    {
-      icon: <Code className="size-4 text-blue-300" />,
-      title: "React",
-      description: "Modern, efficient UI development",
-      date: "Advanced",
-      iconClassName: "text-primary",
-      titleClassName: "text-primary",
-      className: "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
-    },
-    {
-      icon: <Palette className="size-4 text-pink-300" />,
-      title: "UI/UX Design",
-      description: "Intuitive and engaging interfaces",
-      date: "Expert",
-      iconClassName: "text-secondary",
-      titleClassName: "text-secondary",
-      className: "[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
-    },
-    {
-      icon: <Zap className="size-4 text-yellow-300" />,
-      title: "JavaScript",
-      description: "Dynamic, interactive web functionality",
-      date: "Advanced",
-      iconClassName: "text-accent",
-      titleClassName: "text-accent",
-      className: "[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
-    },
-  ];
-
   return (
     <section id="bio" ref={sectionRef} className="scroll-section pt-20 pb-32 relative overflow-visible">
       <div className="container mx-auto px-4">
@@ -187,22 +155,8 @@ const BioSection = () => {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-start relative">
-          <div className="lg:order-1 w-full">
-            <Timeline data={timelineItems} />
-          </div>
-          
-          <motion.div
-            variants={variants}
-            initial="hidden"
-            animate={controls}
-            custom={1}
-            className="flex items-center justify-center lg:order-2 min-h-[500px] z-20 relative"
-          >
-            <div className="w-full max-w-xl">
-              <DisplayCards cards={skillCards} />
-            </div>
-          </motion.div>
+        <div className="max-w-5xl mx-auto">
+          <Timeline data={timelineItems} />
         </div>
       </div>
     </section>
