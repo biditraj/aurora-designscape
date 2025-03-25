@@ -1,4 +1,3 @@
-
 import { useRef, useEffect } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import DisplayCards from './ui/display-cards';
@@ -32,66 +31,22 @@ const BioSection = () => {
   // Timeline data with all the content
   const timelineItems: TimelineEntry[] = [
     {
-      title: "2025 (Expected Graduation)",
+      title: "2020",
       content: (
         <div>
-          <h4 className="text-xl font-bold mb-4">UI/UX Designer & Frontend Developer</h4>
+          <h4 className="text-xl font-bold mb-4">Intern at Tech Access, New Delhi</h4>
           <p className="text-foreground text-sm mb-6">
-            Leading design and development projects, creating intuitive user interfaces.
+            Kickstarted my career in frontend development.
           </p>
           <div className="space-y-4 mb-6">
             <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Worked on various projects, including HRMS, PTE app, and career page
+              ✅ Assisted in developing web applications and dynamic UI components
             </div>
             <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Developed responsive web applications using React, Tailwind, and modern frontend technologies
+              ✅ Gained a strong foundation in modern frontend technologies and best practices
             </div>
             <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Enhanced UI/UX designs using Figma and Adobe XD
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "2024-2025",
-      content: (
-        <div>
-          <h4 className="text-xl font-bold mb-4">Intern at The Assigner</h4>
-          <p className="text-foreground text-sm mb-6">
-            Gained hands-on experience in frontend and UI/UX development.
-          </p>
-          <div className="space-y-4 mb-6">
-            <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Worked on real-world projects, enhancing UI/UX skills
-            </div>
-            <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Designed and developed user-friendly interfaces
-            </div>
-            <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Learned industry best practices in frontend development
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "2021-Present",
-      content: (
-        <div>
-          <h4 className="text-xl font-bold mb-4">Frontend Developer at Tech Access, New Delhi</h4>
-          <p className="text-foreground text-sm mb-6">
-            Specialized in frontend development, collaborating on multiple projects.
-          </p>
-          <div className="space-y-4 mb-6">
-            <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Built and optimized reusable component libraries for scalability
-            </div>
-            <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Worked closely with design teams to implement pixel-perfect UIs
-            </div>
-            <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Improved website performance and user experience
+              ✅ Focused on UI optimization and improving user experience
             </div>
           </div>
         </div>
@@ -101,19 +56,63 @@ const BioSection = () => {
       title: "2020",
       content: (
         <div>
-          <h4 className="text-xl font-bold mb-4">Intern at Tech Access, New Delhi</h4>
+          <h4 className="text-xl font-bold mb-4">Frontend Developer at Tech Access, New Delhi</h4>
           <p className="text-foreground text-sm mb-6">
-            Started practical experience in frontend development.
+            Specialized in frontend development, collaborating on multiple projects.
           </p>
           <div className="space-y-4 mb-6">
             <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Assisted in developing web applications and UI components
+              ✅ Built and optimized scalable, reusable component libraries
             </div>
             <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Learned core concepts of modern frontend development
+              ✅ Worked closely with design teams to implement pixel-perfect UIs
             </div>
             <div className="flex gap-2 items-center text-foreground text-sm">
-              ✅ Worked on optimizing user interfaces for better user experience
+              ✅ Enhanced website performance, accessibility, and user engagement
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "2024",
+      content: (
+        <div>
+          <h4 className="text-xl font-bold mb-4">Intern at The Assigner</h4>
+          <p className="text-foreground text-sm mb-6">
+            Gaining hands-on experience in frontend and UI/UX development.
+          </p>
+          <div className="space-y-4 mb-6">
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Worked on real-world projects, refining UI/UX skills and frontend performance
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Designed and developed user-friendly, accessible, and visually appealing interfaces
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Implemented industry best practices in frontend development
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Present",
+      content: (
+        <div>
+          <h4 className="text-xl font-bold mb-4">UI/UX Designer & Frontend Developer</h4>
+          <p className="text-foreground text-sm mb-6">
+            Leading design and development projects to create intuitive digital experiences.
+          </p>
+          <div className="space-y-4 mb-6">
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Worked on projects including HRMS, PTE app, and career pages
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Developed responsive web applications using React, Tailwind CSS, and modern frontend technologies
+            </div>
+            <div className="flex gap-2 items-center text-foreground text-sm">
+              ✅ Enhanced UI/UX designs using Figma, Adobe XD, and interactive animations
             </div>
           </div>
         </div>
@@ -131,9 +130,8 @@ const BioSection = () => {
 
           <div>
             <h4 className="text-xl font-bold mb-2">Diploma in ITESM</h4>
-            <p className="text-foreground text-sm">Diploma in Information Technology Enabled Services & Management</p>
             <p className="text-foreground text-sm">Aditya Institute of Technology, New Delhi</p>
-            <p className="text-foreground text-sm italic">Completed: 2020</p>
+            <p className="text-foreground text-sm italic">Completed in 2020</p>
           </div>
         </div>
       ),
