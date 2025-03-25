@@ -1,294 +1,144 @@
 
-import { useRef, useState, useEffect } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
-import { useToast } from '@/hooks/use-toast';
-import { Send, Mail, MapPin, Phone, Instagram, Github, Linkedin, Twitter } from 'lucide-react';
-import { useForm, ValidationError } from '@formspree/react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),
+});
 
 const Contact = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-  const controls = useAnimation();
-  const { toast } = useToast();
-  const navigate = useNavigate();
-  const [formState, setFormState] = useState({
-    name: '',
-    subject: '',
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      message: '',
+    },
   });
-  const [formspreeState, handleSubmit] = useForm("mzzegvyk");
-  const [animationStarted, setAnimationStarted] = useState(false);
 
-  // Start animation when section comes into view
-  if (isInView && !animationStarted) {
-    controls.start('visible');
-    setAnimationStarted(true);
-  }
-
-  // Handle form success and redirect
-  useEffect(() => {
-    if (formspreeState.succeeded) {
-      toast({
-        title: "Message sent!",
-        description: "Thanks for reaching out. I'll get back to you soon.",
-      });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsSubmitting(true);
+    try {
+      // This is where you'd normally send the form data to your backend
+      console.log('Form submitted:', values);
       
-      // Reset form state
-      setFormState({
-        name: '',
-        subject: '',
-      });
+      // Simulate a network request
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Redirect to home page after a short delay
-      setTimeout(() => {
-        navigate('/');
-      }, 1500);
+      form.reset();
+      setIsSuccess(true);
+      setTimeout(() => setIsSuccess(false), 3000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
     }
-  }, [formspreeState.succeeded, toast, navigate]);
-
-  const variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    }),
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormState(prev => ({ ...prev, [name]: value }));
-  };
-
-  const contactInfo = [
-    {
-      icon: <Mail className="h-5 w-5 text-primary" />,
-      title: 'Email',
-      value: 'biditraj@gmail.com',
-      link: 'mailto:biditraj@gmail.com',
-    },
-    {
-      icon: <MapPin className="h-5 w-5 text-secondary" />,
-      title: 'Location',
-      value: 'New Delhi, India',
-    },
-    {
-      icon: <Phone className="h-5 w-5 text-accent" />,
-      title: 'Phone',
-      value: '+(91) 9337718826',
-      link: 'tel:+919337718826',
-    },
-  ];
-
-  // Social media links
-  const socialMedia = [
-    {
-      icon: <Instagram className="w-5 h-5" />,
-      title: 'Instagram',
-      url: 'https://www.instagram.com/shutup.bidit?igsh=MmRtajA4ZTR1ZnI=',
-      ariaLabel: 'Instagram Profile'
-    },
-    {
-      icon: <Github className="w-5 h-5" />,
-      title: 'GitHub',
-      url: 'https://github.com/biditraj',
-      ariaLabel: 'GitHub Profile'
-    },
-    {
-      icon: <Linkedin className="w-5 h-5" />,
-      title: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/biditraj/',
-      ariaLabel: 'LinkedIn Profile'
-    },
-    {
-      icon: <Twitter className="w-5 h-5" />,
-      title: 'Twitter',
-      url: 'https://twitter.com/biditraj',
-      ariaLabel: 'Twitter Profile'
-    }
-  ];
 
   return (
-    <section id="contact" ref={sectionRef} className="scroll-section pt-20 relative overflow-hidden">
-      <div className="container mx-auto px-6 py-16 md:py-32">
+    <section id="contact" className="py-24 bg-black/5 backdrop-blur-sm">
+      <div className="container mx-auto px-4 md:px-6">
         <motion.div
-          variants={variants}
-          initial="hidden"
-          animate={controls}
-          custom={0}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto"
         >
-          <span className="tag">Get in Touch</span>
-          <h2 className="text-3xl md:text-4xl font-bold mt-3 mb-6">
-            Let's <span className="text-gradient">Connect</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Have a project in mind or want to discuss potential opportunities? 
-            I'd love to hear from you!
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-20">
-          <motion.div
-            variants={variants}
-            initial="hidden"
-            animate={controls}
-            custom={1}
-          >
-            <div className="glass-card p-8" id="contact-form">
-              <h3 className="text-2xl font-bold mb-6">Send Me a Message</h3>
-              <form onSubmit={handleSubmit}>
-                <div className="space-y-5">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">
-                      Your Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formState.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none transition-colors"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none transition-colors"
-                    />
-                    <ValidationError 
-                      prefix="Email" 
-                      field="email"
-                      errors={formspreeState.errors}
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                      Subject
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formState.subject}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none transition-colors"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2">
-                      Your Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none transition-colors resize-none"
-                    ></textarea>
-                    <ValidationError 
-                      prefix="Message" 
-                      field="message"
-                      errors={formspreeState.errors}
-                      className="text-red-500 text-sm mt-1"
-                    />
-                  </div>
-                  
-                  <button
-                    type="submit"
-                    className="btn-primary w-full flex items-center justify-center gap-2"
-                    disabled={formspreeState.submitting}
-                  >
-                    {formspreeState.submitting ? (
-                      'Sending...'
-                    ) : (
-                      <>
-                        Send Message <Send size={16} />
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </motion.div>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Let's Connect</h2>
           
-          <motion.div
-            variants={variants}
-            initial="hidden"
-            animate={controls}
-            custom={2}
-            className="flex flex-col justify-between"
-          >
-            <div>
-              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-              <div className="space-y-6">
-                {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="p-3 glass-card rounded-full mt-1">
-                      {info.icon}
-                    </div>
-                    <div>
-                      <h4 className="text-sm text-muted-foreground mb-1">{info.title}</h4>
-                      {info.link ? (
-                        <a 
-                          href={info.link} 
-                          className="text-lg font-medium hover:text-primary transition-colors"
-                        >
-                          {info.value}
-                        </a>
-                      ) : (
-                        <p className="text-lg font-medium">{info.value}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
+          <div className="flex justify-center space-x-6 mb-12">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
+              <Github className="h-6 w-6" />
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
+              <Linkedin className="h-6 w-6" />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
+              <Twitter className="h-6 w-6" />
+            </a>
+            <a href="mailto:hello@example.com" className="p-3 bg-background hover:bg-primary/10 transition-colors rounded-full">
+              <Mail className="h-6 w-6" />
+            </a>
+          </div>
+          
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your email" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
               
-              <div className="mt-12">
-                <h3 className="text-xl font-bold mb-4">Follow Me</h3>
-                <div className="flex gap-4">
-                  {socialMedia.map((social, index) => (
-                    <a 
-                      key={index}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
-                      aria-label={social.ariaLabel}
-                    >
-                      {social.icon}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-            
-            <div className="glass-card p-6 mt-12">
-              <p className="text-lg">
-                "The details are not the details. They make the design."
-              </p>
-              <p className="text-right text-sm mt-2 text-muted-foreground">
-                — Charles Eames
-              </p>
-            </div>
-          </motion.div>
-        </div>
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Message</FormLabel>
+                    <FormControl>
+                      <Textarea 
+                        placeholder="What would you like to talk about?" 
+                        className="min-h-32"
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <Button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full"
+              >
+                {isSubmitting ? 'Sending...' : isSuccess ? 'Message Sent!' : 'Send Message'}
+              </Button>
+            </form>
+          </Form>
+
+          <div className="mt-12 text-center text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Bidit Raj. All rights reserved.
+          </div>
+        </motion.div>
       </div>
     </section>
   );

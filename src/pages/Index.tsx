@@ -1,3 +1,4 @@
+
 import { useRef } from 'react';
 import { SplashCursor } from '@/components/ui/splash-cursor';
 import Aurora from '@/components/Aurora';
@@ -5,11 +6,9 @@ import Hero from '@/components/Hero';
 import BioSection from '@/components/BioSection';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NavBar } from '@/components/ui/tubelight-navbar';
-import { Home, User, Briefcase, LightbulbIcon, MessageSquare, Clock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Home, User, Briefcase, MessageSquare } from 'lucide-react';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,7 +43,6 @@ const Index = () => {
         <BioSection />
         <Projects />
         <Contact />
-        <Footer />
       </motion.div>
     </AnimatePresence>
   );
