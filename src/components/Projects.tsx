@@ -1,3 +1,4 @@
+
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { ArrowRight, Github, X, Loader2 } from 'lucide-react';
@@ -49,6 +50,15 @@ const Projects = () => {
         behavior: 'smooth',
         block: 'start'
       });
+    } else {
+      // If the specific element isn't found, try scrolling to the contact section
+      const contactSectionFallback = document.getElementById('contact');
+      if (contactSectionFallback) {
+        contactSectionFallback.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     }
   };
 

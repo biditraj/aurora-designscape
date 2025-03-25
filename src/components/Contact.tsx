@@ -1,7 +1,8 @@
+
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Mail, MapPin, Phone, Instagram, Github } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, Instagram, Github, Linkedin, Twitter } from 'lucide-react';
 import { useForm, ValidationError } from '@formspree/react';
 import { useNavigate } from 'react-router-dom';
 
@@ -83,6 +84,34 @@ const Contact = () => {
     },
   ];
 
+  // Social media links
+  const socialMedia = [
+    {
+      icon: <Instagram className="w-5 h-5" />,
+      title: 'Instagram',
+      url: 'https://www.instagram.com/shutup.bidit?igsh=MmRtajA4ZTR1ZnI=',
+      ariaLabel: 'Instagram Profile'
+    },
+    {
+      icon: <Github className="w-5 h-5" />,
+      title: 'GitHub',
+      url: 'https://github.com/biditraj',
+      ariaLabel: 'GitHub Profile'
+    },
+    {
+      icon: <Linkedin className="w-5 h-5" />,
+      title: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/biditraj/',
+      ariaLabel: 'LinkedIn Profile'
+    },
+    {
+      icon: <Twitter className="w-5 h-5" />,
+      title: 'Twitter',
+      url: 'https://twitter.com/biditraj',
+      ariaLabel: 'Twitter Profile'
+    }
+  ];
+
   return (
     <section id="contact" ref={sectionRef} className="scroll-section pt-20 relative overflow-hidden">
       <div className="container mx-auto px-6 py-16 md:py-32">
@@ -110,9 +139,9 @@ const Contact = () => {
             animate={controls}
             custom={1}
           >
-            <div className="glass-card p-8">
+            <div className="glass-card p-8" id="contact-form">
               <h3 className="text-2xl font-bold mb-6">Send Me a Message</h3>
-              <form onSubmit={handleSubmit} id="contact-form">
+              <form onSubmit={handleSubmit}>
                 <div className="space-y-5">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -234,24 +263,18 @@ const Contact = () => {
               <div className="mt-12">
                 <h3 className="text-xl font-bold mb-4">Follow Me</h3>
                 <div className="flex gap-4">
-                  <a 
-                    href="https://www.instagram.com/shutup.bidit?igsh=MmRtajA4ZTR1ZnI="
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
-                    aria-label="Instagram Profile"
-                  >
-                    <Instagram className="w-5 h-5" />
-                  </a>
-                  <a 
-                    href="https://github.com/biditraj"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
-                    aria-label="GitHub Profile"
-                  >
-                    <Github className="w-5 h-5" />
-                  </a>
+                  {socialMedia.map((social, index) => (
+                    <a 
+                      key={index}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 glass-card rounded-full hover:bg-white/10 transition-all duration-300"
+                      aria-label={social.ariaLabel}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
