@@ -1,17 +1,27 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { Timeline, TimelineEntry } from './ui/timeline';
+import { InfiniteSlider } from './ui/infinite-slider';
 
 const BioSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const skillsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const isSkillsInView = useInView(skillsRef, { once: true, amount: 0.1 });
   const controls = useAnimation();
+  const skillsControls = useAnimation();
 
   useEffect(() => {
     if (isInView) {
       controls.start('visible');
     }
   }, [isInView, controls]);
+
+  useEffect(() => {
+    if (isSkillsInView) {
+      skillsControls.start('visible');
+    }
+  }, [isSkillsInView, skillsControls]);
 
   const variants = {
     hidden: { opacity: 0, y: 20 },
@@ -137,16 +147,16 @@ const BioSection = () => {
   ];
 
   return (
-    <section id="bio" ref={sectionRef} className="scroll-section pt-20 pb-32 relative overflow-visible">
+    <section id="bio" ref={sectionRef} className="scroll-section pt-12 pb-10 relative overflow-visible">
       <div className="container mx-auto px-4">
         <motion.div 
           variants={variants}
           initial="hidden"
           animate={controls}
           custom={0}
-          className="mb-16 max-w-3xl mx-auto text-center"
+          className="mb-10 max-w-3xl mx-auto text-center"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">About Me</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
           <p className="text-lg text-foreground/80">
             I'm a frontend developer and UI/UX designer from Bihar, based in New Delhi. With a Diploma in ITESM (2020) and currently pursuing a B.Tech in CSE, I specialize in React, Tailwind CSS, and Figma.
           </p>
@@ -155,8 +165,126 @@ const BioSection = () => {
           </p>
         </motion.div>
         
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto mb-10">
           <Timeline data={timelineItems} />
+        </div>
+        
+        <div ref={skillsRef} className="mt-10 mb-0 min-h-[150px]">
+          <motion.div
+            variants={variants}
+            initial="visible"
+            animate="visible"
+            custom={1}
+            className="w-full"
+          >
+            <div className="w-full h-[150px]">
+              <InfiniteSlider gap={50} duration={35} className="w-full">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                  alt="React logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg"
+                  alt="Tailwind CSS logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                  alt="JavaScript logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                  alt="TypeScript logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+                  alt="Figma logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                  alt="HTML5 logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                  alt="CSS3 logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg"
+                  alt="Redux logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                  alt="Node.js logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg"
+                  alt="Sass logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+                  alt="GitHub logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
+                  alt="Bootstrap logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg"
+                  alt="Webpack logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                  alt="Docker logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg"
+                  alt="AWS logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+                  alt="Git logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg"
+                  alt="Vue logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg"
+                  alt="Photoshop logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg"
+                  alt="Framer logo"
+                  className="h-[70px] w-auto object-contain"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://www.svgrepo.com/download/452202/framer.svg";
+                  }}
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                  alt="Python logo"
+                  className="h-[70px] w-auto object-contain"
+                />
+              </InfiniteSlider>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
