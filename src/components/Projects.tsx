@@ -1,7 +1,10 @@
 
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Heart } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from "@/hooks/use-toast";
 
 const projects = [
   {
@@ -34,6 +37,148 @@ const projects = [
 ];
 
 const Projects = () => {
+  const [user, setUser] = useState(null);
+  const [likedProjects, setLikedProjects] = useState<number[]>([]);
+  const [likeCounts, setLikeCounts] = useState<Record<number, number>>({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user is authenticated
+    const checkUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+    };
+
+    // Fetch like counts for all projects
+    const fetchLikeCounts = async () => {
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('project_likes')
+          .select('project_id, count')
+          .select('project_id')
+
+        if (error) {
+          console.error('Error fetching like counts:', error);
+          return;
+        }
+
+        // Calculate like counts for each project
+        const counts: Record<number, number> = {};
+        projects.forEach(project => {
+          counts[project.id] = data.filter(like => like.project_id === project.id).length;
+        });
+        setLikeCounts(counts);
+      } catch (error) {
+        console.error('Error in fetching like counts:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Fetch which projects the current user has liked
+    const fetchUserLikes = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        const { data, error } = await supabase
+          .from('project_likes')
+          .select('project_id')
+          .eq('user_id', user.id);
+
+        if (error) {
+          console.error('Error fetching user likes:', error);
+          return;
+        }
+
+        // Set the projects the user has liked
+        setLikedProjects(data.map(like => like.project_id));
+      }
+    };
+
+    checkUser();
+    fetchLikeCounts();
+    fetchUserLikes();
+
+    // Set up auth state listener
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      setUser(session?.user || null);
+      if (session?.user) {
+        await fetchUserLikes();
+      } else {
+        setLikedProjects([]);
+      }
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLike = async (projectId: number) => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to like projects",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const isLiked = likedProjects.includes(projectId);
+
+    try {
+      if (isLiked) {
+        // Unlike the project
+        const { error } = await supabase
+          .from('project_likes')
+          .delete()
+          .eq('project_id', projectId)
+          .eq('user_id', user.id);
+
+        if (error) throw error;
+
+        // Update local state
+        setLikedProjects(prev => prev.filter(id => id !== projectId));
+        setLikeCounts(prev => ({
+          ...prev,
+          [projectId]: (prev[projectId] || 0) - 1
+        }));
+
+        toast({
+          title: "Project unliked",
+          description: "You've removed your like from this project"
+        });
+      } else {
+        // Like the project
+        const { error } = await supabase
+          .from('project_likes')
+          .insert({ project_id: projectId, user_id: user.id });
+
+        if (error) throw error;
+
+        // Update local state
+        setLikedProjects(prev => [...prev, projectId]);
+        setLikeCounts(prev => ({
+          ...prev,
+          [projectId]: (prev[projectId] || 0) + 1
+        }));
+
+        toast({
+          title: "Project liked",
+          description: "Thanks for liking this project!"
+        });
+      }
+    } catch (error) {
+      console.error('Error toggling like:', error);
+      toast({
+        title: "Error",
+        description: "There was a problem processing your request",
+        variant: "destructive"
+      });
+    }
+  };
+
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
@@ -98,7 +243,19 @@ const Projects = () => {
                 />
               </div>
               <div className="p-4 sm:p-5 flex flex-col flex-grow">
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">{project.title}</h3>
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-lg sm:text-xl font-semibold">{project.title}</h3>
+                  <button
+                    onClick={() => handleLike(project.id)}
+                    className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
+                    aria-label={likedProjects.includes(project.id) ? "Unlike project" : "Like project"}
+                  >
+                    <Heart
+                      className={`h-4 w-4 ${likedProjects.includes(project.id) ? "fill-primary text-primary" : "text-muted-foreground"}`}
+                    />
+                    <span>{isLoading ? '...' : likeCounts[project.id] || 0}</span>
+                  </button>
+                </div>
                 <p className="text-muted-foreground text-sm mb-3 flex-grow">{project.description}</p>
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {project.tags.map(tag => (
