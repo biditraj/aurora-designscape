@@ -1,3 +1,4 @@
+
 import React from 'react';
 import LoadingAnimation from './LoadingAnimation';
 import { motion } from 'framer-motion';
@@ -23,4 +24,4 @@ const FullScreenLoader: React.FC<FullScreenLoaderProps> = ({ isLoading }) => {
   );
 };
 
-export default FullScreenLoader; 
+export default FullScreenLoader;
