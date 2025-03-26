@@ -1,3 +1,4 @@
+
 import { useRef, useState, useEffect } from 'react';
 import { SplashCursor } from '@/components/ui/splash-cursor';
 import Aurora from '@/components/Aurora';
@@ -7,6 +8,7 @@ import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CustomSidebar } from '@/components/ui/custom-sidebar';
+import Navbar from '@/components/Navbar';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,6 +49,9 @@ const Index = () => {
         
         {/* Only render SplashCursor on desktop */}
         {isDesktop && <SplashCursor />}
+        
+        {/* Add Navbar to make login/signup links visible */}
+        <Navbar />
         
         {/* New sidebar navigation */}
         <CustomSidebar />
