@@ -11,6 +11,7 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import FullScreenLoader from "./components/FullScreenLoader";
 
+// Create the query client outside of the component
 const queryClient = new QueryClient();
 
 const App = () => {
