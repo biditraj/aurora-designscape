@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -7,13 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
-import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import FullScreenLoader from "./components/FullScreenLoader";
-import { createClient } from '@supabase/supabase-js';
-import { AuthProvider } from "./contexts/AuthContext";
 
-// Create the query client outside of the component
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -31,28 +26,25 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
-          <AnimatePresence mode="wait">
-            {isLoading ? (
-              <FullScreenLoader isLoading={isLoading} key="loader" />
-            ) : (
-              <>
-                <Toaster />
-                <Sonner />
-                <BrowserRouter key="browser">
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/auth" element={<Auth />} />
-                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </BrowserRouter>
-              </>
-            )}
-          </AnimatePresence>
-        </TooltipProvider>
-      </AuthProvider>
+      <TooltipProvider>
+        <AnimatePresence mode="wait">
+          {isLoading ? (
+            <FullScreenLoader isLoading={isLoading} key="loader" />
+          ) : (
+            <>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter key="browser">
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </>
+          )}
+        </AnimatePresence>
+      </TooltipProvider>
     </QueryClientProvider>
   );
 };

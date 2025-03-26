@@ -1,19 +1,12 @@
 
 import { useState, useEffect } from 'react';
-import { Menu, X, LogIn, LogOut, UserPlus } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const { user } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,23 +31,6 @@ const Navbar = () => {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await supabase.auth.signOut();
-      toast({
-        title: "Signed out successfully",
-        description: "You have been logged out.",
-      });
-      navigate('/');
-    } catch (error: any) {
-      toast({
-        title: "Error signing out",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
   };
 
   const navLinks = [
@@ -94,37 +70,8 @@ const Navbar = () => {
                   </a>
                 </li>
               ))}
-              
-              {user ? (
-                <li>
-                  <Button 
-                    variant="outline" 
-                    onClick={handleSignOut}
-                    className="border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/40"
-                  >
-                    <LogOut size={16} className="mr-2" />
-                    Sign Out
-                  </Button>
-                </li>
-              ) : (
-                <>
-                  <li>
-                    <Link to="/auth?mode=signin" className="btn-primary flex items-center gap-2">
-                      <LogIn size={16} />
-                      Sign In
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/auth?mode=signup" className="btn-secondary flex items-center gap-2">
-                      <UserPlus size={16} />
-                      Sign Up
-                    </Link>
-                  </li>
-                </>
-              )}
-              
               <li>
-                <a href="#contact" className="btn-secondary">
+                <a href="#contact" className="btn-primary">
                   Say Hello
                 </a>
               </li>
@@ -172,54 +119,14 @@ const Navbar = () => {
                         </a>
                       </motion.li>
                     ))}
-                    
                     <motion.li
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3, duration: 0.4 }}
                     >
-                      {user ? (
-                        <Button 
-                          variant="outline"
-                          onClick={() => {
-                            handleSignOut();
-                            closeMobileMenu();
-                          }}
-                          className="border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 mt-4"
-                        >
-                          <LogOut size={16} className="mr-2" />
-                          Sign Out
-                        </Button>
-                      ) : (
-                        <div className="flex flex-col gap-4 mt-4 w-full">
-                          <Link
-                            to="/auth?mode=signin"
-                            className="flex items-center justify-center gap-2 btn-primary"
-                            onClick={closeMobileMenu}
-                          >
-                            <LogIn size={16} />
-                            Sign In
-                          </Link>
-                          <Link
-                            to="/auth?mode=signup"
-                            className="flex items-center justify-center gap-2 btn-secondary"
-                            onClick={closeMobileMenu}
-                          >
-                            <UserPlus size={16} />
-                            Sign Up
-                          </Link>
-                        </div>
-                      )}
-                    </motion.li>
-                    
-                    <motion.li
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.35, duration: 0.4 }}
-                    >
                       <a
                         href="#contact"
-                        className="btn-secondary mt-4"
+                        className="btn-primary mt-4"
                         onClick={closeMobileMenu}
                       >
                         Say Hello
