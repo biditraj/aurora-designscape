@@ -1,12 +1,16 @@
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogIn, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,12 +29,44 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+    
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+    
+    return () => subscription.unsubscribe();
+  }, []);
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast({
+        title: "Signed out successfully",
+        description: "You have been logged out.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error signing out",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
   };
 
   const navLinks = [
@@ -70,8 +106,28 @@ const Navbar = () => {
                   </a>
                 </li>
               ))}
+              
+              {user ? (
+                <li>
+                  <Button 
+                    variant="outline" 
+                    onClick={handleSignOut}
+                    className="border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/40"
+                  >
+                    Sign Out
+                  </Button>
+                </li>
+              ) : (
+                <li>
+                  <a href="/auth" className="btn-primary flex items-center gap-2">
+                    <LogIn size={16} />
+                    Sign In
+                  </a>
+                </li>
+              )}
+              
               <li>
-                <a href="#contact" className="btn-primary">
+                <a href="#contact" className="btn-secondary">
                   Say Hello
                 </a>
               </li>
@@ -119,14 +175,43 @@ const Navbar = () => {
                         </a>
                       </motion.li>
                     ))}
+                    
                     <motion.li
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3, duration: 0.4 }}
                     >
+                      {user ? (
+                        <Button 
+                          variant="outline"
+                          onClick={() => {
+                            handleSignOut();
+                            closeMobileMenu();
+                          }}
+                          className="border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 mt-4"
+                        >
+                          Sign Out
+                        </Button>
+                      ) : (
+                        <a
+                          href="/auth"
+                          className="flex items-center gap-2 btn-primary mt-4"
+                          onClick={closeMobileMenu}
+                        >
+                          <LogIn size={16} />
+                          Sign In
+                        </a>
+                      )}
+                    </motion.li>
+                    
+                    <motion.li
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.35, duration: 0.4 }}
+                    >
                       <a
                         href="#contact"
-                        className="btn-primary mt-4"
+                        className="btn-secondary mt-4"
                         onClick={closeMobileMenu}
                       >
                         Say Hello
