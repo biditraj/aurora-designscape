@@ -1,18 +1,20 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, ArrowLeft } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import Aurora from '@/components/Aurora';
+import { Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 // Form schemas for validation
 const signInSchema = z.object({
@@ -33,31 +35,18 @@ const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [activeTab, setActiveTab] = useState<string>('signIn');
+  const [searchParams] = useSearchParams();
+  const initialMode = searchParams.get('mode') === 'signup' ? 'signUp' : 'signIn';
+  const [activeTab, setActiveTab] = useState<string>(initialMode);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
-  // Check if user is already logged in
+  // Redirect if user is already logged in
   useEffect(() => {
-    const checkSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        navigate('/');
-      }
-    };
-    
-    checkSession();
-    
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (session) {
-          navigate('/');
-        }
-      }
-    );
-    
-    return () => subscription.unsubscribe();
-  }, [navigate]);
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   // Form for sign in
   const signInForm = useForm<z.infer<typeof signInSchema>>({
@@ -96,6 +85,8 @@ const Auth = () => {
         title: "Welcome back!",
         description: "You've been successfully signed in.",
       });
+      
+      navigate('/');
       
     } catch (error: any) {
       toast({
@@ -160,11 +151,13 @@ const Auth = () => {
           <h1 className="text-3xl font-bold text-foreground mb-2 font-display">
             <span className="text-gradient">Bidit</span> <span className="text-foreground">Raj</span>
           </h1>
-          <p className="text-muted-foreground">Sign in to access your account</p>
+          <p className="text-muted-foreground">
+            {activeTab === 'signIn' ? 'Sign in to your account' : 'Create a new account'}
+          </p>
         </div>
         
         <div className="glass-card p-8 backdrop-blur-md">
-          <Tabs defaultValue="signIn" value={activeTab} onValueChange={setActiveTab}>
+          <Tabs defaultValue={initialMode} value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="grid grid-cols-2 mb-6 w-full">
               <TabsTrigger value="signIn">Sign In</TabsTrigger>
               <TabsTrigger value="signUp">Sign Up</TabsTrigger>
@@ -341,12 +334,13 @@ const Auth = () => {
           </Tabs>
           
           <div className="mt-6 text-center">
-            <a 
-              href="/"
-              className="text-primary hover:underline transition-all text-sm"
+            <Link 
+              to="/"
+              className="text-primary hover:underline transition-all text-sm flex items-center justify-center gap-2"
             >
+              <ArrowLeft size={16} />
               Return to homepage
-            </a>
+            </Link>
           </div>
         </div>
       </motion.div>

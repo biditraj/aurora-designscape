@@ -10,6 +10,8 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import FullScreenLoader from "./components/FullScreenLoader";
+import { createClient } from '@supabase/supabase-js';
+import { AuthProvider } from "./contexts/AuthContext";
 
 // Create the query client outside of the component
 const queryClient = new QueryClient();
@@ -29,26 +31,28 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <AnimatePresence mode="wait">
-          {isLoading ? (
-            <FullScreenLoader isLoading={isLoading} key="loader" />
-          ) : (
-            <>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter key="browser">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/auth" element={<Auth />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </BrowserRouter>
-            </>
-          )}
-        </AnimatePresence>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <AnimatePresence mode="wait">
+            {isLoading ? (
+              <FullScreenLoader isLoading={isLoading} key="loader" />
+            ) : (
+              <>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter key="browser">
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/auth" element={<Auth />} />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </BrowserRouter>
+              </>
+            )}
+          </AnimatePresence>
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };
