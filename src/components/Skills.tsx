@@ -3,7 +3,6 @@ import { useRef, useEffect } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { Code, Palette, Lightbulb } from 'lucide-react';
 import DisplayCards from './ui/display-cards';
-import ScrollReveal from './ScrollReveal';
 
 const Skills = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -75,17 +74,9 @@ const Skills = () => {
           <h2 className="text-3xl md:text-4xl font-bold mt-3 mb-6">
             My <span className="text-gradient">Skills</span>
           </h2>
-          
-          <ScrollReveal 
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={3}
-            blurStrength={6}
-            containerClassName="max-w-2xl mx-auto"
-            textClassName="text-lg text-muted-foreground"
-          >
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Expertise developed through years of dedication and continuous learning
-          </ScrollReveal>
+          </p>
         </motion.div>
 
         <div className="flex min-h-[400px] w-full items-center justify-center">

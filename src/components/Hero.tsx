@@ -1,8 +1,6 @@
-
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import VariableProximity from './VariableProximity';
-import ScrollReveal from './ScrollReveal';
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,8 +45,8 @@ const Hero = () => {
             />
           </motion.h1>
           
-          <motion.div 
-            className="mb-10"
+          <motion.h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 playfair-display-medium" 
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: {
@@ -61,47 +59,16 @@ const Hero = () => {
               }
             }}
           >
-            <ScrollReveal 
-              baseOpacity={0}
-              enableBlur={true}
-              baseRotation={5}
-              blurStrength={10}
-              scrollContainerRef={containerRef}
-              containerClassName="playfair-display-medium mt-6 mb-8"
-              textClassName="text-3xl md:text-4xl lg:text-5xl"
-            >
-              Crafting Digital Experiences with Precision
-            </ScrollReveal>
-          </motion.div>
-          
-          <motion.div 
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.6,
-                  ease: [0.16, 1, 0.3, 1]
-                }
-              }
-            }}
-            className="max-w-3xl mx-auto mt-8"
-          >
-            <ScrollReveal 
-              baseOpacity={0}
-              enableBlur={true}
-              baseRotation={5}
-              blurStrength={10}
-              scrollContainerRef={containerRef}
-              containerClassName="text-foreground/80"
-              textClassName="text-lg md:text-xl"
-            >
-              When does a man die? When he is hit by a bullet? No! When he suffers a disease?
-              No! When he ate a soup made out of a poisonous mushroom?
-              No! A man dies when he is forgotten!
-            </ScrollReveal>
-          </motion.div>
+            <VariableProximity 
+              label="Crafting Digital Experiences with Precision" 
+              fromFontVariationSettings="'wght' 400, 'opsz' 9" 
+              toFontVariationSettings="'wght' 800, 'opsz' 40" 
+              containerRef={containerRef} 
+              radius={150} 
+              falloff="exponential" 
+              className="variable-proximity-title playfair-display" 
+            />
+          </motion.h2>
         </motion.div>
       </div>
     </section>
