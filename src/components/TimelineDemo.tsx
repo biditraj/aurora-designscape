@@ -1,9 +1,11 @@
+
 import Image from "./ui/image";
 import React from "react";
 import { Timeline } from "./ui/timeline";
 import { Link } from "react-router-dom";
 import { ArrowLeftIcon } from "lucide-react";
 import Aurora from "./Aurora";
+import ScrollReveal from "./ui/scroll-reveal";
 
 export function TimelineDemo() {
   const data = [
@@ -11,9 +13,15 @@ export function TimelineDemo() {
       title: "2024",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+          <ScrollReveal 
+            textClassName="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={2}
+            blurStrength={4}
+          >
             Currently leading UI/UX design and frontend development for multiple client projects. Specializing in React, TypeScript, and modern design systems.
-          </p>
+          </ScrollReveal>
           <div className="grid grid-cols-2 gap-4">
             <Image
               src="https://assets.aceternity.com/templates/startup-1.webp"
@@ -51,12 +59,25 @@ export function TimelineDemo() {
       title: "2022-2023",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+          <ScrollReveal 
+            textClassName="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={2}
+            blurStrength={4}
+          >
             Joined a design agency as a Frontend Developer, focusing on React and modern frontend technologies. Developed multiple client websites and applications.
-          </p>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+          </ScrollReveal>
+          <ScrollReveal 
+            textClassName="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={2}
+            blurStrength={4}
+            delay={0.2}
+          >
             Collaborated with design teams to implement pixel-perfect designs and ensure smooth user experiences across all devices.
-          </p>
+          </ScrollReveal>
           <div className="grid grid-cols-2 gap-4">
             <Image
               src="https://assets.aceternity.com/pro/hero-sections.png"
@@ -94,24 +115,75 @@ export function TimelineDemo() {
       title: "2021",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4">
+          <ScrollReveal 
+            textClassName="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={2}
+            blurStrength={4}
+          >
             Started my journey as a UI/UX Design Intern, learning the fundamentals of user-centered design and digital product development.
-          </p>
+          </ScrollReveal>
           <div className="mb-8">
             <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Learned design principles and best practices
+              <ScrollReveal 
+                textClassName="flex items-center w-full"
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={1}
+                blurStrength={3}
+                delay={0.1}
+              >
+                ✅ Learned design principles and best practices
+              </ScrollReveal>
             </div>
             <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Mastered Figma and UI design tools
+              <ScrollReveal 
+                textClassName="flex items-center w-full"
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={1}
+                blurStrength={3}
+                delay={0.2}
+              >
+                ✅ Mastered Figma and UI design tools
+              </ScrollReveal>
             </div>
             <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Contributed to UX research and usability testing
+              <ScrollReveal 
+                textClassName="flex items-center w-full"
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={1}
+                blurStrength={3}
+                delay={0.3}
+              >
+                ✅ Contributed to UX research and usability testing
+              </ScrollReveal>
             </div>
             <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Created design systems and component libraries
+              <ScrollReveal 
+                textClassName="flex items-center w-full"
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={1}
+                blurStrength={3}
+                delay={0.4}
+              >
+                ✅ Created design systems and component libraries
+              </ScrollReveal>
             </div>
             <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Developed skills in frontend implementation
+              <ScrollReveal 
+                textClassName="flex items-center w-full"
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={1}
+                blurStrength={3}
+                delay={0.5}
+              >
+                ✅ Developed skills in frontend implementation
+              </ScrollReveal>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -148,6 +220,7 @@ export function TimelineDemo() {
       ),
     },
   ];
+  
   return (
     <div className="min-h-screen w-full relative">
       <Aurora 
@@ -166,6 +239,16 @@ export function TimelineDemo() {
       </Link>
       
       <div className="absolute top-0 left-0 w-full pt-20">
+        <ScrollReveal
+          className="max-w-7xl mx-auto px-6 pb-10 text-center"
+          textClassName="text-4xl md:text-5xl font-bold"
+          baseOpacity={0}
+          enableBlur={true}
+          baseRotation={3}
+          blurStrength={5}
+        >
+          My Professional Timeline
+        </ScrollReveal>
         <Timeline data={data} />
       </div>
     </div>
