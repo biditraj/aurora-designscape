@@ -1,20 +1,29 @@
+
 import Image from "./ui/image";
-import React from "react";
+import React, { useRef } from "react";
 import { Timeline } from "./ui/timeline";
 import { Link } from "react-router-dom";
 import { ArrowLeftIcon } from "lucide-react";
 import Aurora from "./Aurora";
+import ScrollReveal from "./ScrollReveal";
 
 export function TimelineDemo() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const data = [
     {
       title: "2024",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+          <ScrollReveal 
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={3}
+            blurStrength={5}
+            scrollContainerRef={containerRef}
+          >
             Currently leading UI/UX design and frontend development for multiple client projects. Specializing in React, TypeScript, and modern design systems.
-          </p>
-          <div className="grid grid-cols-2 gap-4">
+          </ScrollReveal>
+          <div className="grid grid-cols-2 gap-4 mt-8">
             <Image
               src="https://assets.aceternity.com/templates/startup-1.webp"
               alt="design project"
@@ -51,13 +60,26 @@ export function TimelineDemo() {
       title: "2022-2023",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+          <ScrollReveal 
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={3}
+            blurStrength={5}
+            scrollContainerRef={containerRef}
+          >
             Joined a design agency as a Frontend Developer, focusing on React and modern frontend technologies. Developed multiple client websites and applications.
-          </p>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+          </ScrollReveal>
+          <ScrollReveal 
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={3}
+            blurStrength={5}
+            scrollContainerRef={containerRef}
+            containerClassName="mt-8"
+          >
             Collaborated with design teams to implement pixel-perfect designs and ensure smooth user experiences across all devices.
-          </p>
-          <div className="grid grid-cols-2 gap-4">
+          </ScrollReveal>
+          <div className="grid grid-cols-2 gap-4 mt-8">
             <Image
               src="https://assets.aceternity.com/pro/hero-sections.png"
               alt="frontend project"
@@ -94,10 +116,16 @@ export function TimelineDemo() {
       title: "2021",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4">
+          <ScrollReveal 
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={3}
+            blurStrength={5}
+            scrollContainerRef={containerRef}
+          >
             Started my journey as a UI/UX Design Intern, learning the fundamentals of user-centered design and digital product development.
-          </p>
-          <div className="mb-8">
+          </ScrollReveal>
+          <div className="mt-4 mb-8">
             <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
               ✅ Learned design principles and best practices
             </div>
@@ -149,7 +177,7 @@ export function TimelineDemo() {
     },
   ];
   return (
-    <div className="min-h-screen w-full relative">
+    <div className="min-h-screen w-full relative" ref={containerRef}>
       <Aurora 
         colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
         blend={0.5}
@@ -170,4 +198,4 @@ export function TimelineDemo() {
       </div>
     </div>
   );
-} 
+}

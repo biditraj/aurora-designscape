@@ -65,7 +65,7 @@ const Hero = () => {
               baseOpacity={0}
               enableBlur={true}
               baseRotation={5}
-              blurStrength={6}
+              blurStrength={10}
               scrollContainerRef={containerRef}
               containerClassName="playfair-display-medium mt-6 mb-8"
               textClassName="text-3xl md:text-4xl lg:text-5xl"
@@ -91,8 +91,8 @@ const Hero = () => {
             <ScrollReveal 
               baseOpacity={0}
               enableBlur={true}
-              baseRotation={3}
-              blurStrength={4}
+              baseRotation={5}
+              blurStrength={10}
               scrollContainerRef={containerRef}
               containerClassName="text-foreground/80"
               textClassName="text-lg md:text-xl"
