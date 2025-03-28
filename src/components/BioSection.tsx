@@ -179,9 +179,12 @@ const BioSection = () => {
                   className="h-[70px] w-auto object-contain"
                 />
                 <img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg"
+                  src="https://www.svgrepo.com/download/374118/tailwind.svg"
                   alt="Tailwind CSS logo"
                   className="h-[70px] w-auto object-contain"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://tailwindcss.com/_next/static/media/tailwindcss-mark.3c5441fc7a190fb1800d4a5c7f07ba4b1345a9c8.svg";
+                  }}
                 />
                 <img
                   src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
@@ -244,9 +247,12 @@ const BioSection = () => {
                   className="h-[70px] w-auto object-contain"
                 />
                 <img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg"
+                  src="https://www.svgrepo.com/download/373458/aws.svg"
                   alt="AWS logo"
                   className="h-[70px] w-auto object-contain"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://d1.awsstatic.com/logos/aws-logo-lockups/poweredbyaws/PB_AWS_logo_RGB_stacked_REV_SQ.91cd4af40773cbfbd15577a3c2b8a346fe3e8fa2.png";
+                  }}
                 />
                 <img
                   src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
