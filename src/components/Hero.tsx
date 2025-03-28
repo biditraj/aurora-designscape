@@ -1,6 +1,8 @@
+
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import VariableProximity from './VariableProximity';
+import ScrollReveal from './ui/scroll-reveal';
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -45,30 +47,17 @@ const Hero = () => {
             />
           </motion.h1>
           
-          <motion.h2 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 playfair-display-medium" 
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.6,
-                  ease: [0.16, 1, 0.3, 1]
-                }
-              }
-            }}
+          <ScrollReveal 
+            className="w-full"
+            textClassName="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 playfair-display-medium"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={2}
+            blurStrength={5}
+            delay={0.5}
           >
-            <VariableProximity 
-              label="Crafting Digital Experiences with Precision" 
-              fromFontVariationSettings="'wght' 400, 'opsz' 9" 
-              toFontVariationSettings="'wght' 800, 'opsz' 40" 
-              containerRef={containerRef} 
-              radius={150} 
-              falloff="exponential" 
-              className="variable-proximity-title playfair-display" 
-            />
-          </motion.h2>
+            Crafting Digital Experiences with Precision
+          </ScrollReveal>
         </motion.div>
       </div>
     </section>

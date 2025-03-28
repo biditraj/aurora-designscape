@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { Code, Palette, Lightbulb } from 'lucide-react';
 import DisplayCards from './ui/display-cards';
+import ScrollReveal from './ui/scroll-reveal';
 
 const Skills = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -71,12 +72,27 @@ const Skills = () => {
           custom={0}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mt-3 mb-6">
+          <ScrollReveal
+            className="mb-6"
+            textClassName="text-3xl md:text-4xl font-bold mt-3"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={3}
+            blurStrength={5}
+          >
             My <span className="text-gradient">Skills</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </ScrollReveal>
+          
+          <ScrollReveal
+            textClassName="text-lg text-muted-foreground max-w-2xl mx-auto"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={2}
+            blurStrength={4}
+            delay={0.3}
+          >
             Expertise developed through years of dedication and continuous learning
-          </p>
+          </ScrollReveal>
         </motion.div>
 
         <div className="flex min-h-[400px] w-full items-center justify-center">
