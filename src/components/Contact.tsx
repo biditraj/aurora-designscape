@@ -4,12 +4,14 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Github, Instagram, Mail, CheckCircle } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import VariableProximity from './VariableProximity';
 import ScrollReveal from './ui/scroll-reveal';
 
 const Contact = () => {
   const [state, handleSubmit] = useForm("mzzegvyk");
   const [formError, setFormError] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,25 +26,37 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-black/5 backdrop-blur-sm relative z-10">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="contact" className="min-h-screen flex items-center py-20 relative">
+      <div ref={containerRef} className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto"
+          className="max-w-4xl mx-auto"
+          initial={{
+            opacity: 0,
+            y: 30
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0
+          }}
+          transition={{
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1]
+          }}
+          viewport={{
+            once: true
+          }}
         >
-          <ScrollReveal
-            className="mb-8"
-            textClassName="text-3xl md:text-4xl font-bold text-center"
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={2}
-            blurStrength={5}
-          >
-            Let's Connect
-          </ScrollReveal>
+          <div className="text-center mb-12">
+            <VariableProximity 
+              label="Let's Connect"
+              fromFontVariationSettings="'wght' 400, 'opsz' 9" 
+              toFontVariationSettings="'wght' 800, 'opsz' 40" 
+              containerRef={containerRef} 
+              radius={150} 
+              falloff="exponential" 
+              className="variable-proximity-title playfair-display text-3xl md:text-4xl lg:text-5xl font-bold mb-8" 
+            />
+          </div>
           
           <div className="flex justify-center space-x-6 mb-12">
             <a 

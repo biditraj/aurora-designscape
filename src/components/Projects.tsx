@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, Heart } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from "@/hooks/use-toast";
 import ScrollReveal from './ui/scroll-reveal';
+import VariableProximity from './VariableProximity';
 
 const projects = [
   {
@@ -41,6 +42,7 @@ const Projects = () => {
   const [likedProjects, setLikedProjects] = useState<number[]>([]);
   const [likeCounts, setLikeCounts] = useState<Record<number, number>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     // Check if user is authenticated
@@ -190,8 +192,9 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-12 sm:py-16 md:py-20 lg:py-24 relative">
-      <div className="container md:px-6 mx-px my-0 py-0 px-0">
+      <div ref={containerRef} className="container mx-auto px-4 relative z-10">
         <motion.div 
+          className="text-center mb-12"
           initial={{
             opacity: 0,
             y: 20
@@ -205,19 +208,19 @@ const Projects = () => {
           }} 
           viewport={{
             once: true
-          }} 
-          className="text-center mb-8 md:mb-12"
+          }}
         >
-          <ScrollReveal
-            className="mb-3 md:mb-4"
-            textClassName="text-2xl sm:text-3xl md:text-4xl font-bold"
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={2}
-            blurStrength={5}
-          >
-            My Projects
-          </ScrollReveal>
+          <div className="mb-3 md:mb-4">
+            <VariableProximity 
+              label="My Projects"
+              fromFontVariationSettings="'wght' 400, 'opsz' 9" 
+              toFontVariationSettings="'wght' 800, 'opsz' 40" 
+              containerRef={containerRef} 
+              radius={150} 
+              falloff="exponential" 
+              className="variable-proximity-title playfair-display text-2xl sm:text-3xl md:text-4xl font-bold" 
+            />
+          </div>
           
           <ScrollReveal
             textClassName="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto"

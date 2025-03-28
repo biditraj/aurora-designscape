@@ -6,6 +6,7 @@ import { Home, User, Briefcase, MessageSquare, Github, Instagram, Mail } from "l
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { MobileDockNav } from "./mobile-dock-nav";
+
 export function CustomSidebar() {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -67,8 +68,8 @@ export function CustomSidebar() {
         <Sidebar open={open} setOpen={setOpen}>
           <SidebarBody className="justify-between gap-10 bg-background/20 backdrop-blur-xl border-r border-white/10">
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-              {open ? <Logo /> : <LogoIcon />}
-              <div className="flex flex-col gap-4 mt-8">
+              {open ? <Logo /> : null}
+              <div className="flex flex-col gap-4 mt-3">
                 {links.map((link, idx) => <div key={idx} onClick={() => handleSectionScroll(link.href)} className="cursor-pointer">
                     <SidebarLink link={link} className="hover:bg-primary/10 rounded-md px-2 transition-all duration-300" />
                   </div>)}
@@ -90,9 +91,14 @@ export function CustomSidebar() {
       <MobileDockNav />
     </>;
 }
+
 export const Logo = () => {
   return <a href="#" className="font-normal flex space-x-2 items-center text-sm text-foreground py-1 px-2 relative z-20">
-      <div className="h-5 w-6 rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0 bg-[#000070]/0" />
+      <img 
+        src="/images/logo.jpeg"
+        alt="Beach Profile" 
+        className="h-8 w-8 rounded-full object-cover border border-white/20" 
+      />
       <motion.span initial={{
       opacity: 0
     }} animate={{
@@ -102,8 +108,13 @@ export const Logo = () => {
       </motion.span>
     </a>;
 };
+
 export const LogoIcon = () => {
   return <a href="#" className="font-normal flex space-x-2 items-center text-sm text-foreground py-1 px-2 relative z-20">
-      <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+      <img 
+        src="/images/logo.jpeg"
+        alt="Beach Profile" 
+        className="h-8 w-8 rounded-full object-cover border border-white/20" 
+      />
     </a>;
 };

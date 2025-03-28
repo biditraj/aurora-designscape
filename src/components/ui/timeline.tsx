@@ -2,6 +2,8 @@
 
 import { useMotionValueEvent, useScroll, useTransform, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
+import VariableProximity from "../VariableProximity";
+
 export interface TimelineEntry {
   title: string;
   content: React.ReactNode;
@@ -42,7 +44,15 @@ export const Timeline = ({
   return <div className="w-full bg-transparent font-sans md:px-10" ref={containerRef}>
       <div className="max-w-7xl py-20 px-4 lg:px-10 md:px-[29px] mx-[6px] my-0">
         <h2 className="text-lg md:text-4xl mb-4 text-foreground max-w-4xl">
-          My Journey Through <span className="text-gradient">Design & Development</span>
+          <VariableProximity 
+            label="My Journey Through Design & Development"
+            fromFontVariationSettings="'wght' 400, 'opsz' 9" 
+            toFontVariationSettings="'wght' 800, 'opsz' 40" 
+            containerRef={containerRef} 
+            radius={150} 
+            falloff="exponential" 
+            className="variable-proximity-title playfair-display" 
+          />
         </h2>
         <p className="text-muted-foreground text-sm md:text-base max-w-3xl">
           Explore the timeline of my career growth as a designer and developer. From my early days as an intern to my current role leading UI/UX design and frontend development projects, this journey showcases my passion for creating exceptional digital experiences.
