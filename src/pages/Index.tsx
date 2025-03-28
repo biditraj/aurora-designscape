@@ -1,4 +1,3 @@
-
 import { useRef, useState, useEffect } from 'react';
 import { SplashCursor } from '@/components/ui/splash-cursor';
 import Aurora from '@/components/Aurora';
@@ -6,7 +5,6 @@ import Hero from '@/components/Hero';
 import BioSection from '@/components/BioSection';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
-import Skills from '@/components/Skills';
 import Footer from '@/components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CustomSidebar } from '@/components/ui/custom-sidebar';
@@ -58,7 +56,6 @@ const Index = () => {
         <div className="md:pl-16 pb-24 md:pb-0">
           <Hero />
           <BioSection />
-          <Skills />
           <Projects />
           <Contact />
           <Footer />

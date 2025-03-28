@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Github, Instagram, Mail, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
+import ScrollReveal from './ui/scroll-reveal';
 
 const Contact = () => {
   const [state, handleSubmit] = useForm("mzzegvyk");
@@ -32,7 +33,16 @@ const Contact = () => {
           viewport={{ once: true }}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Let's Connect</h2>
+          <ScrollReveal
+            className="mb-8"
+            textClassName="text-3xl md:text-4xl font-bold text-center"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={2}
+            blurStrength={5}
+          >
+            Let's Connect
+          </ScrollReveal>
           
           <div className="flex justify-center space-x-6 mb-12">
             <a 
@@ -93,9 +103,16 @@ const Contact = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium">
+                    <ScrollReveal
+                      textClassName="text-sm font-medium"
+                      baseOpacity={0}
+                      enableBlur={true}
+                      baseRotation={1}
+                      blurStrength={3}
+                      delay={0.1}
+                    >
                       Name
-                    </label>
+                    </ScrollReveal>
                     <Input 
                       id="name"
                       name="name"
@@ -112,9 +129,16 @@ const Contact = () => {
                   </div>
                   
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium">
+                    <ScrollReveal
+                      textClassName="text-sm font-medium"
+                      baseOpacity={0}
+                      enableBlur={true}
+                      baseRotation={1}
+                      blurStrength={3}
+                      delay={0.2}
+                    >
                       Email
-                    </label>
+                    </ScrollReveal>
                     <Input
                       id="email"
                       type="email" 
@@ -133,9 +157,16 @@ const Contact = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">
+                  <ScrollReveal
+                    textClassName="text-sm font-medium"
+                    baseOpacity={0}
+                    enableBlur={true}
+                    baseRotation={1}
+                    blurStrength={3}
+                    delay={0.3}
+                  >
                     Message
-                  </label>
+                  </ScrollReveal>
                   <Textarea
                     id="message"
                     name="message"
@@ -162,9 +193,17 @@ const Contact = () => {
             </div>
           )}
 
-          <div className="mt-12 text-center text-sm text-muted-foreground">
+          <ScrollReveal
+            className="mt-12 text-center"
+            textClassName="text-sm text-muted-foreground"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={1}
+            blurStrength={3}
+            delay={0.4}
+          >
             © {new Date().getFullYear()} Bidit Raj. All rights reserved.
-          </div>
+          </ScrollReveal>
         </motion.div>
       </div>
     </section>

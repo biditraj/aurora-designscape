@@ -1,10 +1,10 @@
-
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, Heart } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from "@/hooks/use-toast";
+import ScrollReveal from './ui/scroll-reveal';
 
 const projects = [
   {
@@ -208,10 +208,27 @@ const Projects = () => {
           }} 
           className="text-center mb-8 md:mb-12"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4">My Projects</h2>
-          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
+          <ScrollReveal
+            className="mb-3 md:mb-4"
+            textClassName="text-2xl sm:text-3xl md:text-4xl font-bold"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={2}
+            blurStrength={5}
+          >
+            My Projects
+          </ScrollReveal>
+          
+          <ScrollReveal
+            textClassName="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto"
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={1}
+            blurStrength={3}
+            delay={0.2}
+          >
             Here are some of the projects I've built. Click on the links to view the live demos or explore the code on GitHub.
-          </p>
+          </ScrollReveal>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
@@ -244,7 +261,16 @@ const Projects = () => {
               </div>
               <div className="p-4 sm:p-5 flex flex-col flex-grow">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg sm:text-xl font-semibold">{project.title}</h3>
+                  <ScrollReveal
+                    textClassName="text-lg sm:text-xl font-semibold"
+                    baseOpacity={0}
+                    enableBlur={true}
+                    baseRotation={2}
+                    blurStrength={4}
+                    delay={index * 0.1}
+                  >
+                    {project.title}
+                  </ScrollReveal>
                   <button
                     onClick={() => handleLike(project.id)}
                     className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
@@ -256,7 +282,17 @@ const Projects = () => {
                     <span>{isLoading ? '...' : likeCounts[project.id] || 0}</span>
                   </button>
                 </div>
-                <p className="text-muted-foreground text-sm mb-3 flex-grow">{project.description}</p>
+                <ScrollReveal
+                  className="mb-4 flex-grow"
+                  textClassName="text-sm text-muted-foreground"
+                  baseOpacity={0}
+                  enableBlur={true}
+                  baseRotation={1}
+                  blurStrength={3}
+                  delay={index * 0.1 + 0.1}
+                >
+                  {project.description}
+                </ScrollReveal>
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {project.tags.map(tag => (
                     <span key={tag} className="text-xs px-2 py-0.5 bg-primary/10 rounded-full">
