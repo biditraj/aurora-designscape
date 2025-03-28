@@ -42,14 +42,14 @@ const BioSection = () => {
     {
       title: "2020",
       content: (
-        <div>
-          <h4 className="text-xl font-bold mb-4">
+        <div className="p-6 transition-all duration-300">
+          <h4 className="text-xl font-bold mb-3">
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={3} 
               blurStrength={5}
-              textClassName="text-xl font-bold"
+              textClassName="text-xl md:text-2xl font-bold text-gradient"
             >
               Intern at Tech Access, New Delhi
             </ScrollReveal>
@@ -59,40 +59,40 @@ const BioSection = () => {
             enableBlur={true} 
             baseRotation={2} 
             blurStrength={4}
-            textClassName="text-foreground text-sm mb-6"
+            textClassName="text-foreground/80 text-sm md:text-base mb-6 italic"
           >
             Kickstarted my career in frontend development.
           </ScrollReveal>
-          <div className="space-y-4 mb-6">
+          <div className="space-y-3 mb-4">
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-primary/60 pl-4 py-1"
               delay={0.1}
             >
-              ✅ Assisted in developing web applications and dynamic UI components
+              Assisted in developing web applications and dynamic UI components
             </ScrollReveal>
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-primary/60 pl-4 py-1"
               delay={0.2}
             >
-              ✅ Gained a strong foundation in modern frontend technologies and best practices
+              Gained a strong foundation in modern frontend technologies and best practices
             </ScrollReveal>
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-primary/60 pl-4 py-1"
               delay={0.3}
             >
-              ✅ Focused on UI optimization and improving user experience
+              Focused on UI optimization and improving user experience
             </ScrollReveal>
           </div>
         </div>
@@ -101,14 +101,14 @@ const BioSection = () => {
     {
       title: "2020",
       content: (
-        <div>
-          <h4 className="text-xl font-bold mb-4">
+        <div className="p-6 transition-all duration-300">
+          <h4 className="text-xl font-bold mb-3">
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={3} 
               blurStrength={5}
-              textClassName="text-xl font-bold"
+              textClassName="text-xl md:text-2xl font-bold text-gradient"
             >
               Frontend Developer at Tech Access, New Delhi
             </ScrollReveal>
@@ -118,40 +118,40 @@ const BioSection = () => {
             enableBlur={true} 
             baseRotation={2} 
             blurStrength={4}
-            textClassName="text-foreground text-sm mb-6"
+            textClassName="text-foreground/80 text-sm md:text-base mb-6 italic"
           >
             Specialized in frontend development, collaborating on multiple projects.
           </ScrollReveal>
-          <div className="space-y-4 mb-6">
+          <div className="space-y-3 mb-4">
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-secondary/60 pl-4 py-1"
               delay={0.1}
             >
-              ✅ Built and optimized scalable, reusable component libraries
+              Built and optimized scalable, reusable component libraries
             </ScrollReveal>
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-secondary/60 pl-4 py-1"
               delay={0.2}
             >
-              ✅ Worked closely with design teams to implement pixel-perfect UIs
+              Worked closely with design teams to implement pixel-perfect UIs
             </ScrollReveal>
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-secondary/60 pl-4 py-1"
               delay={0.3}
             >
-              ✅ Enhanced website performance, accessibility, and user engagement
+              Enhanced website performance, accessibility, and user engagement
             </ScrollReveal>
           </div>
         </div>
@@ -160,14 +160,14 @@ const BioSection = () => {
     {
       title: "2024",
       content: (
-        <div>
-          <h4 className="text-xl font-bold mb-4">
+        <div className="p-6 transition-all duration-300">
+          <h4 className="text-xl font-bold mb-3">
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={3} 
               blurStrength={5}
-              textClassName="text-xl font-bold"
+              textClassName="text-xl md:text-2xl font-bold text-gradient"
             >
               Intern at The Assigner
             </ScrollReveal>
@@ -177,40 +177,40 @@ const BioSection = () => {
             enableBlur={true} 
             baseRotation={2} 
             blurStrength={4}
-            textClassName="text-foreground text-sm mb-6"
+            textClassName="text-foreground/80 text-sm md:text-base mb-6 italic"
           >
             Gaining hands-on experience in frontend and UI/UX development.
           </ScrollReveal>
-          <div className="space-y-4 mb-6">
+          <div className="space-y-3 mb-4">
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-accent/60 pl-4 py-1"
               delay={0.1}
             >
-              ✅ Worked on real-world projects, refining UI/UX skills and frontend performance
+              Worked on real-world projects, refining UI/UX skills and frontend performance
             </ScrollReveal>
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-accent/60 pl-4 py-1"
               delay={0.2}
             >
-              ✅ Designed and developed user-friendly, accessible, and visually appealing interfaces
+              Designed and developed user-friendly, accessible, and visually appealing interfaces
             </ScrollReveal>
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-accent/60 pl-4 py-1"
               delay={0.3}
             >
-              ✅ Implemented industry best practices in frontend development
+              Implemented industry best practices in frontend development
             </ScrollReveal>
           </div>
         </div>
@@ -219,14 +219,14 @@ const BioSection = () => {
     {
       title: "Present",
       content: (
-        <div>
-          <h4 className="text-xl font-bold mb-4">
+        <div className="p-6 transition-all duration-300">
+          <h4 className="text-xl font-bold mb-3">
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={3} 
               blurStrength={5}
-              textClassName="text-xl font-bold"
+              textClassName="text-xl md:text-2xl font-bold text-gradient"
             >
               UI/UX Designer & Frontend Developer
             </ScrollReveal>
@@ -236,40 +236,40 @@ const BioSection = () => {
             enableBlur={true} 
             baseRotation={2} 
             blurStrength={4}
-            textClassName="text-foreground text-sm mb-6"
+            textClassName="text-foreground/80 text-sm md:text-base mb-6 italic"
           >
             Leading design and development projects to create intuitive digital experiences.
           </ScrollReveal>
-          <div className="space-y-4 mb-6">
+          <div className="space-y-3 mb-4">
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-primary/60 pl-4 py-1"
               delay={0.1}
             >
-              ✅ Worked on projects including HRMS, PTE app, and career pages
+              Worked on projects including HRMS, PTE app, and career pages
             </ScrollReveal>
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-primary/60 pl-4 py-1"
               delay={0.2}
             >
-              ✅ Developed responsive web applications using React, Tailwind CSS, and modern frontend technologies
+              Developed responsive web applications using React, Tailwind CSS, and modern frontend technologies
             </ScrollReveal>
             <ScrollReveal 
               baseOpacity={0} 
               enableBlur={true} 
               baseRotation={1} 
               blurStrength={3}
-              textClassName="flex gap-2 items-center text-foreground text-sm"
+              textClassName="flex items-start text-foreground text-sm leading-relaxed border-l-3 border-primary/60 pl-4 py-1"
               delay={0.3}
             >
-              ✅ Enhanced UI/UX designs using Figma, Adobe XD, and interactive animations
+              Enhanced UI/UX designs using Figma, Adobe XD, and interactive animations
             </ScrollReveal>
           </div>
         </div>
@@ -278,15 +278,16 @@ const BioSection = () => {
     {
       title: "Education",
       content: (
-        <div>
-          <div className="mb-8">
-            <h4 className="text-xl font-bold mb-2">
+        <div className="p-6 rounded-lg transition-all duration-300">
+          <div className="mb-8 relative">
+            <span className="absolute -left-2 top-0 h-full w-1 bg-gradient-to-b from-primary/80 to-primary/30 rounded-full"></span>
+            <h4 className="text-xl font-bold mb-3">
               <ScrollReveal 
                 baseOpacity={0} 
                 enableBlur={true} 
                 baseRotation={3} 
                 blurStrength={5}
-                textClassName="text-xl font-bold"
+                textClassName="text-xl md:text-2xl font-bold text-gradient"
               >
                 Bachelor of Technology in Computer Science
               </ScrollReveal>
@@ -296,7 +297,7 @@ const BioSection = () => {
               enableBlur={true} 
               baseRotation={2} 
               blurStrength={4}
-              textClassName="text-foreground text-sm"
+              textClassName="text-foreground text-sm md:text-base font-medium"
             >
               National Institute of Science and Technology, Berhampur
             </ScrollReveal>
@@ -305,21 +306,22 @@ const BioSection = () => {
               enableBlur={true} 
               baseRotation={2} 
               blurStrength={4}
-              textClassName="text-foreground text-sm italic"
+              textClassName="text-foreground/70 text-sm italic mt-2"
               delay={0.2}
             >
               Expected Graduation: May 2025
             </ScrollReveal>
           </div>
 
-          <div>
-            <h4 className="text-xl font-bold mb-2">
+          <div className="relative">
+            <span className="absolute -left-2 top-0 h-full w-1 bg-gradient-to-b from-secondary/80 to-secondary/30 rounded-full"></span>
+            <h4 className="text-xl font-bold mb-3">
               <ScrollReveal 
                 baseOpacity={0} 
                 enableBlur={true} 
                 baseRotation={3} 
                 blurStrength={5}
-                textClassName="text-xl font-bold"
+                textClassName="text-xl md:text-2xl font-bold text-gradient"
               >
                 Diploma in ITESM
               </ScrollReveal>
@@ -329,7 +331,7 @@ const BioSection = () => {
               enableBlur={true} 
               baseRotation={2} 
               blurStrength={4}
-              textClassName="text-foreground text-sm"
+              textClassName="text-foreground text-sm md:text-base font-medium"
             >
               Aditya Institute of Technology, New Delhi
             </ScrollReveal>
@@ -338,7 +340,7 @@ const BioSection = () => {
               enableBlur={true} 
               baseRotation={2} 
               blurStrength={4}
-              textClassName="text-foreground text-sm italic"
+              textClassName="text-foreground/70 text-sm italic mt-2"
               delay={0.2}
             >
               Completed in 2020
@@ -350,25 +352,25 @@ const BioSection = () => {
   ];
 
   return (
-    <section id="bio" ref={sectionRef} className="scroll-section pt-12 pb-10 relative overflow-visible">
+    <section id="bio" ref={sectionRef} className="scroll-section pt-16 pb-16 relative overflow-visible">
       <div className="container mx-auto px-4">
         <motion.div 
           variants={variants}
           initial="hidden"
           animate={controls}
           custom={0}
-          className="mb-10 max-w-3xl mx-auto text-center"
+          className="mb-12 max-w-3xl mx-auto text-center"
         >
           {/* Section header with ScrollReveal */}
           <ScrollReveal
             className="mb-6"
-            textClassName="text-3xl md:text-4xl font-bold"
+            textClassName="text-3xl md:text-5xl font-bold"
             baseOpacity={0}
             enableBlur={true}
             baseRotation={3}
             blurStrength={5}
           >
-            My Journey Through <span className="text-gradient">Design & Development</span>
+            <span className="text-gradient">Professional Journey</span>
           </ScrollReveal>
           
           <ScrollReveal
@@ -379,15 +381,15 @@ const BioSection = () => {
             blurStrength={4}
             delay={0.3}
           >
-            Explore the timeline of my career growth as a designer and developer. From my early days as an intern to my current role leading UI/UX design and frontend development projects, this journey showcases my passion for creating exceptional digital experiences.
+            From my early internship experiences to current design and development roles, each step has shaped my approach to creating exceptional digital products.
           </ScrollReveal>
         </motion.div>
         
-        <div className="max-w-5xl mx-auto mb-10">
+        <div className="max-w-5xl mx-auto mb-16">
           <Timeline data={timelineItems} />
         </div>
         
-        <div ref={skillsRef} className="mt-10 mb-0 min-h-[150px]">
+        <div ref={skillsRef} className="mt-16 mb-0 min-h-[150px]">
           <motion.div
             variants={variants}
             initial="visible"
